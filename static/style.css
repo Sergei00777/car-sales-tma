@@ -1,0 +1,991 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    background: linear-gradient(135deg, #0a0f2d 0%, #1a1f3d 50%, #0d1126 100%);
+    color: #ffffff;
+    line-height: 1.6;
+    padding-bottom: 90px;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background: rgba(10, 15, 45, 0.95);
+    color: white;
+    padding: 20px;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.header-content {
+    text-align: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    font-size: 32px;
+}
+
+.slogan {
+    font-size: 14px;
+    color: #b0bec5;
+    opacity: 0.9;
+    letter-spacing: 1px;
+}
+
+/* Tabs Container */
+.tabs-container {
+    display: flex;
+    background: rgba(20, 25, 55, 0.8);
+    margin: 20px;
+    border-radius: 15px;
+    padding: 8px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    color: #b0bec5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #0a0f2d;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.tab-btn:hover:not(.active) {
+    color: #ffd700;
+    transform: translateY(-1px);
+}
+
+.tab-icon {
+    font-size: 18px;
+}
+
+/* Main Content */
+.main-content {
+    padding: 0 20px 20px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Car Cards */
+.car-card {
+    background: linear-gradient(135deg, rgba(30, 35, 75, 0.9) 0%, rgba(20, 25, 55, 0.9) 100%);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.car-card.animate-in {
+    animation: cardSlideUp 0.6s ease-out forwards;
+}
+
+@keyframes cardSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+.car-image {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(135deg, #2a2f5d, #1c2145);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.car-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.car-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.car-status.in-stock {
+    background: linear-gradient(135deg, #4caf50, #45a049);
+    color: white;
+}
+
+.car-status.on-order {
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    color: white;
+}
+
+.car-info {
+    padding: 20px;
+}
+
+.car-brand {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.car-specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.spec {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    color: #e0e0e0;
+    backdrop-filter: blur(10px);
+}
+
+.car-features {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+.feature {
+    font-size: 13px;
+    color: #b0bec5;
+    opacity: 0.9;
+}
+
+.car-price {
+    color: #ffd700;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.delivery-info {
+    margin: 10px 0;
+}
+
+.delivery-time {
+    color: #2196f3;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Details Button */
+.details-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #0a0f2d;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.details-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
+
+.btn-arrow {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.details-btn:hover .btn-arrow {
+    transform: translateX(3px);
+}
+
+/* Modern Footer Navigation - СОВРЕМЕННЫЕ ИКОНКИ */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 20, 50, 0.95);
+    display: flex;
+    border-radius: 25px 25px 0 0;
+    padding: 15px 20px;
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-bottom: none;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    width: 95%;
+    max-width: 400px;
+    gap: 5px;
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 12px 8px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    min-height: 60px;
+}
+
+/* Эффект подсветки фона */
+.nav-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 237, 78, 0.05));
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-item.active::before {
+    opacity: 1;
+}
+
+/* Эффект градиентной рамки */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #ffd700, #ffed4e, #ffd700);
+    border-radius: 18px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.nav-item.active::after {
+    opacity: 1;
+    animation: borderGlow 2s infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+.nav-item.active {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-item:hover:not(.active) {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-icon-wrapper {
+    position: relative;
+    margin-bottom: 6px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 2;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-item.active .nav-icon-wrapper {
+    transform: scale(1.2) translateY(-2px);
+}
+
+/* Стили для современных иконок */
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    transition: all 0.4s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.nav-item.active .nav-icon {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+/* Специфичные стили для каждой иконки */
+.icon-home {
+    background: #b0bec5;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.nav-item.active .icon-home {
+    background: #ffffff;
+}
+
+.icon-cars {
+    background: #b0bec5;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.nav-item.active .icon-cars {
+    background: #ffffff;
+}
+
+.icon-cities {
+    background: #b0bec5;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm6 12h-2v-2h2v2zm0-4h-2v-2h2v2z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.nav-item.active .icon-cities {
+    background: #ffffff;
+}
+
+.icon-contacts {
+    background: #b0bec5;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.nav-item.active .icon-contacts {
+    background: #ffffff;
+}
+
+.nav-text {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+    color: #b0bec5;
+}
+
+.nav-item.active .nav-text {
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transform: translateY(1px);
+}
+
+/* Эффект частиц при клике */
+.nav-item:active::before {
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Индикатор уведомлений */
+.notification-dot {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    width: 6px;
+    height: 6px;
+    background: linear-gradient(135deg, #ff4081, #f50057);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    z-index: 3;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+/* Адаптивность для навигации */
+@media (max-width: 768px) {
+    .footer-nav {
+        width: 100%;
+        max-width: none;
+        border-radius: 20px 20px 0 0;
+        padding: 12px 15px;
+    }
+
+    .nav-item {
+        padding: 10px 6px;
+        min-height: 55px;
+    }
+
+    .nav-icon-wrapper {
+        width: 22px;
+        height: 22px;
+    }
+
+    .nav-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .nav-text {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-nav {
+        padding: 10px 8px;
+        gap: 3px;
+    }
+
+    .nav-item {
+        padding: 8px 4px;
+        min-height: 50px;
+    }
+
+    .nav-icon-wrapper {
+        width: 20px;
+        height: 20px;
+    }
+
+    .nav-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .nav-text {
+        font-size: 9px;
+        letter-spacing: 0.3px;
+    }
+}
+
+/* Общая адаптивность */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 0 15px 15px;
+    }
+
+    .tabs-container {
+        margin: 15px;
+        padding: 6px;
+    }
+
+    .tab-btn {
+        padding: 12px 15px;
+        font-size: 13px;
+    }
+
+    .car-info {
+        padding: 15px;
+    }
+
+    .car-brand {
+        font-size: 20px;
+    }
+
+    .header {
+        padding: 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+}
+
+/* Добавляем эти стили в существующий CSS файл */
+
+/* Стили для красивых кнопок переключения */
+.tab-icon-wrapper {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.tab-icon {
+    width: 18px;
+    height: 18px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.tab-btn.active .tab-icon {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+}
+
+.icon-stock {
+    background: #b0bec5;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.tab-btn.active .icon-stock {
+    background: #0a0f2d;
+}
+
+.icon-order {
+    background: #b0bec5;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.tab-btn.active .icon-order {
+    background: #0a0f2d;
+}
+
+.tab-text {
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active .tab-text {
+    font-weight: bold;
+}
+
+/* Улучшаем существующие стили кнопок */
+.tabs-container {
+    display: flex;
+    background: rgba(20, 25, 55, 0.8);
+    margin: 20px;
+    border-radius: 15px;
+    padding: 8px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    color: #b0bec5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tab-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 237, 78, 0.05));
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tab-btn.active::before {
+    opacity: 1;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #0a0f2d;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.tab-btn:hover:not(.active) {
+    color: #ffd700;
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Стили для страницы деталей автомобиля */
+
+.back-button {
+    margin: 20px;
+}
+
+.back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #b0bec5;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffd700;
+    transform: translateX(-5px);
+}
+
+.back-icon {
+    width: 16px;
+    height: 16px;
+    background: #b0bec5;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.back-btn:hover .back-icon {
+    background: #ffd700;
+}
+
+.car-detail {
+    padding: 0 20px 20px;
+}
+
+.car-gallery {
+    margin-bottom: 30px;
+}
+
+.main-image {
+    width: 100%;
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #2a2f5d, #1c2145);
+}
+
+.main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-thumbnails {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.thumbnail:hover {
+    border-color: #ffd700;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.car-detail-info {
+    background: linear-gradient(135deg, rgba(30, 35, 75, 0.9) 0%, rgba(20, 25, 55, 0.9) 100%);
+    border-radius: 20px;
+    padding: 25px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.car-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.car-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0;
+}
+
+.car-status {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.car-status.in-stock {
+    background: linear-gradient(135deg, #4caf50, #45a049);
+    color: white;
+}
+
+.car-status.on-order {
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    color: white;
+}
+
+.car-price-large {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.spec-label {
+    color: #b0bec5;
+    font-size: 14px;
+}
+
+.spec-value {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.features-section h3,
+.delivery-section h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border-left: 3px solid #ffd700;
+}
+
+.feature-icon {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.delivery-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(33, 150, 243, 0.1);
+    border-radius: 12px;
+    border: 1px solid rgba(33, 150, 243, 0.3);
+}
+
+.delivery-icon {
+    font-size: 18px;
+}
+
+.delivery-text {
+    color: #2196f3;
+    font-weight: 600;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.contact-btn,
+.test-drive-btn {
+    padding: 18px 25px;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.contact-btn {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #0a0f2d;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.test-drive-btn {
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    color: white;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.contact-btn:hover,
+.test-drive-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.contact-btn:hover {
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
+
+.test-drive-btn:hover {
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .car-detail {
+        padding: 0 15px 15px;
+    }
+
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .car-title {
+        font-size: 24px;
+    }
+
+    .car-price-large {
+        font-size: 28px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ffd700, #ffed4e);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffed4e, #ffd700);
+}

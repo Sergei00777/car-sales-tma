@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHI AUTO - Авто из Китая, Японии, Кореи</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🚗</span>
+                CHI AUTO
+            </div>
+            <div class="slogan">Авто под заказ из Китая, Японии, Кореи</div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Кнопки переключения -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('in-stock')">
+                <div class="tab-icon-wrapper">
+                    <div class="tab-icon icon-stock"></div>
+                </div>
+                <span class="tab-text">Авто в наличии</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('on-order')">
+                <div class="tab-icon-wrapper">
+                    <div class="tab-icon icon-order"></div>
+                </div>
+                <span class="tab-text">Авто под заказ</span>
+            </button>
+        </div>
+
+        <!-- Авто в наличии -->
+        <div id="in-stock" class="tab-content active">
+            <!-- Geely Coolray -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='images/geely-coolray.jpg') }}" alt="Geely Coolray" onerror="this.style.display='none'">
+                    <div class="car-status in-stock">В наличии</div>
+                </div>
+                <div class="car-info">
+                    <div class="car-brand">Geely Coolray</div>
+                    <div class="car-specs">
+                        <span class="spec">2024 год</span>
+                        <span class="spec">1.5L Turbo</span>
+                        <span class="spec">Автомат</span>
+                        <span class="spec">Полный привод</span>
+                    </div>
+                    <div class="car-features">
+                        <span class="feature">🎵 Панорамная крыша</span>
+                        <span class="feature">🔧 Кожаный салон</span>
+                        <span class="feature">⚡ Apple CarPlay</span>
+                    </div>
+                    <div class="car-price">1 890 000 ₽</div>
+                    <button class="details-btn" onclick="showCarDetails('geely-coolray')">
+                        Подробнее
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Haval Jolion -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='images/haval-jolion.jpg') }}" alt="Haval Jolion" onerror="this.style.display='none'">
+                    <div class="car-status in-stock">В наличии</div>
+                </div>
+                <div class="car-info">
+                    <div class="car-brand">Haval Jolion</div>
+                    <div class="car-specs">
+                        <span class="spec">2023 год</span>
+                        <span class="spec">1.5L Turbo</span>
+                        <span class="spec">Вариатор</span>
+                        <span class="spec">Передний привод</span>
+                    </div>
+                    <div class="car-features">
+                        <span class="feature">🎵 Мультимедиа</span>
+                        <span class="feature">🔧 Камера 360°</span>
+                        <span class="feature">⚡ Климат-контроль</span>
+                    </div>
+                    <div class="car-price">2 100 000 ₽</div>
+                    <button class="details-btn" onclick="showCarDetails('haval-jolion')">
+                        Подробнее
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chery Tiggo 8 Pro -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='images/chery-tiggo8.jpg') }}" alt="Chery Tiggo 8 Pro" onerror="this.style.display='none'">
+                    <div class="car-status in-stock">В наличии</div>
+                </div>
+                <div class="car-info">
+                    <div class="car-brand">Chery Tiggo 8 Pro</div>
+                    <div class="car-specs">
+                        <span class="spec">2024 год</span>
+                        <span class="spec">2.0L Turbo</span>
+                        <span class="spec">Автомат</span>
+                        <span class="spec">Полный привод</span>
+                    </div>
+                    <div class="car-features">
+                        <span class="feature">🎵 Пан. люк</span>
+                        <span class="feature">🔧 Кожа + Алькантара</span>
+                        <span class="feature">⚡ 12.3" экран</span>
+                    </div>
+                    <div class="car-price">2 450 000 ₽</div>
+                    <button class="details-btn" onclick="showCarDetails('chery-tiggo8')">
+                        Подробнее
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Авто под заказ -->
+        <div id="on-order" class="tab-content">
+            <!-- Toyota Camry -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='images/toyota-camry.jpg') }}" alt="Toyota Camry" onerror="this.style.display='none'">
+                    <div class="car-status on-order">Под заказ</div>
+                </div>
+                <div class="car-info">
+                    <div class="car-brand">Toyota Camry</div>
+                    <div class="car-specs">
+                        <span class="spec">2024 год</span>
+                        <span class="spec">2.5L Hybrid</span>
+                        <span class="spec">Автомат</span>
+                        <span class="spec">Передний привод</span>
+                    </div>
+                    <div class="car-features">
+                        <span class="feature">🎵 Премиум аудио</span>
+                        <span class="feature">🔧 Кожаный салон</span>
+                        <span class="feature">⚡ Паркинг-ассистент</span>
+                    </div>
+                    <div class="delivery-info">
+                        <span class="delivery-time">⏱ Доставка: 45-60 дней</span>
+                    </div>
+                    <div class="car-price">3 500 000 ₽</div>
+                    <button class="details-btn" onclick="showCarDetails('toyota-camry')">
+                        Подробнее
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hyundai Tucson -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='images/hyundai-tucson.jpg') }}" alt="Hyundai Tucson" onerror="this.style.display='none'">
+                    <div class="car-status on-order">Под заказ</div>
+                </div>
+                <div class="car-info">
+                    <div class="car-brand">Hyundai Tucson</div>
+                    <div class="car-specs">
+                        <span class="spec">2024 год</span>
+                        <span class="spec">2.0L MPI</span>
+                        <span class="spec">Автомат</span>
+                        <span class="spec">Полный привод</span>
+                    </div>
+                    <div class="car-features">
+                        <span class="feature">🎵 Панорамная крыша</span>
+                        <span class="feature">🔧 Подогрев сидений</span>
+                        <span class="feature">⚡ Бесключевой доступ</span>
+                    </div>
+                    <div class="delivery-info">
+                        <span class="delivery-time">⏱ Доставка: 30-45 дней</span>
+                    </div>
+                    <div class="car-price">2 800 000 ₽</div>
+                    <button class="details-btn" onclick="showCarDetails('hyundai-tucson')">
+                        Подробнее
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Kia Sportage -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='images/kia-sportage.jpg') }}" alt="Kia Sportage" onerror="this.style.display='none'">
+                    <div class="car-status on-order">Под заказ</div>
+                </div>
+                <div class="car-info">
+                    <div class="car-brand">Kia Sportage</div>
+                    <div class="car-specs">
+                        <span class="spec">2024 год</span>
+                        <span class="spec">1.6L Turbo</span>
+                        <span class="spec">Автомат</span>
+                        <span class="spec">Полный привод</span>
+                    </div>
+                    <div class="car-features">
+                        <span class="feature">🎵 Хай-тек салон</span>
+                        <span class="feature">🔧 Вентиляция сидений</span>
+                        <span class="feature">⚡ Цифровая панель</span>
+                    </div>
+                    <div class="delivery-info">
+                        <span class="delivery-time">⏱ Доставка: 60-75 дней</span>
+                    </div>
+                    <div class="car-price">2 950 000 ₽</div>
+                    <button class="details-btn" onclick="showCarDetails('kia-sportage')">
+                        Подробнее
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Navigation -->
+    <nav class="footer-nav">
+        <button class="nav-item active" onclick="showSection('main')">
+            <div class="notification-dot"></div>
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-home"></div>
+            </div>
+            <span class="nav-text">Главная</span>
+        </button>
+
+        <button class="nav-item" onclick="showSection('cars')">
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-cars"></div>
+            </div>
+            <span class="nav-text">Авто</span>
+        </button>
+
+        <button class="nav-item" onclick="showSection('cities')">
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-cities"></div>
+            </div>
+            <span class="nav-text">Города</span>
+        </button>
+
+        <button class="nav-item" onclick="showSection('contacts')">
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-contacts"></div>
+            </div>
+            <span class="nav-text">Контакты</span>
+        </button>
+    </nav>
+
+    <script>
+        function switchTab(tabName) {
+            // Убрать активный класс со всех кнопок и контента
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Активировать выбранную кнопку и контент
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function showSection(sectionName) {
+            // Убрать активный класс со всех кнопок
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Активировать нажатую кнопку
+            event.target.classList.add('active');
+
+            // Здесь можно добавить логику переключения разделов
+            console.log('Переключение на раздел:', sectionName);
+        }
+
+        function showCarDetails(carId) {
+            // Переход на страницу автомобиля
+            window.location.href = `/car/${carId}`;
+        }
+
+        // Анимация появления карточек
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.car-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('animate-in');
+            });
+        });
+    </script>
+</body>
+</html>
