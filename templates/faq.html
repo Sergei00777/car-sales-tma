@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}Часто задаваемые вопросы - CHI AUTO{% endblock %}
+
+{% block extra_css %}
+<style>
+    .faq-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        padding-bottom: 100px;
+    }
+
+    .page-title {
+        color: #ffd700;
+        font-size: 32px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .faq-section {
+        background: linear-gradient(135deg, rgba(30, 35, 75, 0.9) 0%, rgba(20, 25, 55, 0.9) 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        backdrop-filter: blur(15px);
+    }
+
+    .section-title {
+        color: #ffd700;
+        font-size: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+        padding-bottom: 8px;
+    }
+
+    .faq-item {
+        margin-bottom: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .faq-question {
+        width: 100%;
+        background: transparent;
+        border: none;
+        padding: 15px 20px;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .faq-question:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .faq-answer {
+        padding: 0 20px;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        color: #b0bec5;
+        line-height: 1.6;
+    }
+
+    .faq-answer.active {
+        padding: 15px 20px;
+        max-height: 500px;
+    }
+
+    .faq-icon {
+        font-size: 18px;
+        transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-icon {
+        transform: rotate(180deg);
+    }
+
+    .contact-promo {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        background: linear-gradient(135deg, rgba(40, 45, 85, 0.9) 0%, rgba(25, 30, 65, 0.9) 100%);
+        border-radius: 15px;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .contact-btn {
+        background: linear-gradient(135deg, #ffd700, #ffed4e);
+        color: #0a0f2d;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 15px;
+    }
+
+    .contact-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+        .faq-container {
+            padding: 15px;
+            padding-bottom: 100px;
+        }
+
+        .faq-section {
+            padding: 20px;
+        }
+
+        .faq-question {
+            padding: 12px 15px;
+            font-size: 14px;
+        }
+
+        .page-title {
+            font-size: 28px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .faq-question {
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+
+        .page-title {
+            font-size: 24px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="faq-container">
+    <h1 class="page-title">Часто задаваемые вопросы</h1>
+
+    <!-- Общие вопросы -->
+    <div class="faq-section">
+        <h3 class="section-title">Общие вопросы</h3>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Какой срок доставки автомобиля под заказ?
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-answer">
+                Срок доставки зависит от модели автомобиля и составляет от 2 до 6 месяцев. Точные сроки уточняйте у менеджера.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Предоставляете ли вы гарантию на автомобили?
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-answer">
+                Да, на все новые автомобили предоставляется официальная гарантия производителя. На автомобили с пробегом - гарантия от 6 месяцев.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Можно ли получить кредит на покупку автомобиля?
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-answer">
+                Да, мы сотрудничаем с ведущими банками России. Помогаем оформить кредит на выгодных условиях с минимальным пакетом документов.
+            </div>
+        </div>
+    </div>
+
+    <!-- Вопросы по покупке -->
+    <div class="faq-section">
+        <h3 class="section-title">Процесс покупки</h3>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Какой порядок оформления покупки?
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-answer">
+                1. Выбор автомобиля<br>
+                2. Заключение договора<br>
+                3. Внесение аванса<br>
+                4. Постановка автомобиля на учет<br>
+                5. Получение автомобиля
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Нужно ли платить таможенные пошлины?
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-answer">
+                Все таможенные процедуры мы берем на себя. В стоимость автомобиля уже включены все необходимые платежи.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Можно ли обменять автомобиль?
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-answer">
+                Да, в течение 14 дней после покупки возможен обмен автомобиля при наличии веских причин.
+            </div>
+        </div>
+    </div>
+
+    <!-- Технические вопросы -->
+    <div class="faq-section">
+        <h3 class="section-title">Техническое обслуживание</h3>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Где можно обслуживать автомобиль после покупки?
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-answer">
+                Мы предоставляем список рекомендованных сервисных центров в вашем городе. Также возможна доставка оригинальных запчастей.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Делаете ли вы русификацию мультимедиа систем?
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-answer">
+                Да, мы выполняем полную русификацию и адаптацию автомобилей для использования в России.
+            </div>
+        </div>
+    </div>
+
+    <!-- Контактный блок -->
+    <div class="contact-promo">
+        <h3 style="color: #ffd700; margin-bottom: 15px;">Не нашли ответ на свой вопрос?</h3>
+        <p style="color: #ffffff; margin-bottom: 20px;">Наши менеджеры с радостью проконсультируют вас по любым вопросам</p>
+        <button class="contact-btn" onclick="window.location.href='/contacts'">
+            Связаться с нами
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    function toggleFAQ(button) {
+        const faqItem = button.parentElement;
+        const answer = button.nextElementSibling;
+
+        // Закрываем все открытые FAQ
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if (item !== faqItem) {
+                item.classList.remove('active');
+                item.querySelector('.faq-answer').classList.remove('active');
+            }
+        });
+
+        // Переключаем текущий FAQ
+        faqItem.classList.toggle('active');
+        answer.classList.toggle('active');
+    }
+
+    // Закрытие FAQ при клике вне элемента
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.faq-item')) {
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-answer').classList.remove('active');
+            });
+        }
+    });
+</script>
+{% endblock %}

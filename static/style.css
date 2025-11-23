@@ -12,6 +12,18 @@ body {
     padding-bottom: 90px;
     min-height: 100vh;
 }
+/* Логотип (только изображение) */
+.logo-image {
+    height: 50px;
+    width: auto;
+    vertical-align: middle;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* Header */
 .header {
@@ -588,7 +600,7 @@ body {
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
     z-index: 1000;
     width: 95%;
-    max-width: 400px;
+    max-width: 450px;
     gap: 5px;
 }
 

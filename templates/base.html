@@ -12,7 +12,7 @@
     <header class="header">
         <div class="header-content">
             <div class="logo">
-                <span class="logo-icon">🚗</span>
+                <img src="{{ url_for('static', filename='images/logoCHI.jpg') }}" alt="CHI AUTO" class="logo-image">
                 CHI AUTO
             </div>
             <div class="slogan">Авто под заказ из Китая, Японии, Кореи</div>
@@ -45,6 +45,14 @@
                 <div class="nav-icon icon-cities"></div>
             </div>
             <span class="nav-text">Города</span>
+        </button>
+
+        <!-- НОВАЯ КНОПКА FAQ -->
+        <button class="nav-item" onclick="showSection('faq')">
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-faq"></div>
+            </div>
+            <span class="nav-text">FAQ</span>
         </button>
 
         <button class="nav-item" onclick="showSection('contacts')">
@@ -87,6 +95,8 @@
                 showCitiesModal();
             } else if (sectionName === 'contacts') {
                 window.location.href = '/contacts';
+            } else if (sectionName === 'faq') {
+                window.location.href = '/faq';
             }
             console.log('Переключение на раздел:', sectionName);
         }
@@ -215,6 +225,47 @@
     {% endblock %}
 
     <style>
+        /* Логотип */
+        .logo-image {
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+            vertical-align: middle;
+            filter: brightness(0) invert(1); /* Делает логотип белым */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Адаптивность для логотипа */
+        @media (max-width: 768px) {
+            .logo-image {
+                height: 35px;
+                margin-right: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-image {
+                height: 30px;
+                margin-right: 6px;
+            }
+        }
+
+        /* Иконка FAQ */
+        .icon-faq {
+            background: #b0bec5;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .nav-item.active .icon-faq {
+            background: #ffffff;
+        }
+
         /* Модальное окно выбора города */
         .cities-modal {
             display: none;
