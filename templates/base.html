@@ -63,15 +63,11 @@
                 <button class="close-modal" onclick="closeCitiesModal()">×</button>
             </div>
             <div class="cities-list">
-                <button class="city-option" onclick="selectCity('irkutsk')">Иркутск</button>
-                <button class="city-option" onclick="selectCity('moscow')">Москва</button>
-                <button class="city-option" onclick="selectCity('barnaul')">Барнаул</button>
-                <button class="city-option" onclick="selectCity('abakan')">Абакан</button>
-                <button class="city-option" onclick="selectCity('ulan-ude')">Улан-Удэ</button>
-                <button class="city-option" onclick="selectCity('sochi')">Сочи</button>
-                <button class="city-option" onclick="selectCity('krasnoyarsk')">Красноярск</button>
-                <button class="city-option" onclick="selectCity('ekaterinburg')">Екатеринбург</button>
-                <button class="city-option" onclick="selectCity('novosibirsk')">Новосибирск</button>
+                {% for city_id, city in cities.items() %}
+                <button class="city-option" onclick="selectCity('{{ city_id }}', '{{ city.name|urlencode }}', '{{ city.address|urlencode }}', '{{ city.phone }}', '{{ city.email }}', '{{ city.working_hours|urlencode }}', '{{ city.description|urlencode }}')">
+                    {{ city.name }}
+                </button>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -104,21 +100,97 @@
             document.getElementById('citiesModal').style.display = 'none';
         }
 
-        function selectCity(cityId) {
-            const selectedCity = {
-                'irkutsk': 'Иркутск',
-                'moscow': 'Москва',
-                'barnaul': 'Барнаул',
-                'abakan': 'Абакан',
-                'ulan-ude': 'Улан-Удэ',
-                'sochi': 'Сочи',
-                'krasnoyarsk': 'Красноярск',
-                'ekaterinburg': 'Екатеринбург',
-                'novosibirsk': 'Новосибирск'
-            };
+        function selectCity(cityId, cityName, cityAddress, cityPhone, cityEmail, cityWorkingHours, cityDescription) {
+            // Декодируем URL-encoded строки
+            const decodedName = decodeURIComponent(cityName);
+            const decodedAddress = decodeURIComponent(cityAddress);
+            const decodedWorkingHours = decodeURIComponent(cityWorkingHours);
+            const decodedDescription = decodeURIComponent(cityDescription);
 
-            alert('Выбран город: ' + (selectedCity[cityId] || 'Неизвестный город'));
+            // Создаем HTML с информацией о городе
+            const cityInfoHTML = `
+                <div class="city-info-modal">
+                    <h3>${decodedName}</h3>
+                    <div class="city-description">${decodedDescription}</div>
+                    <div class="city-details">
+                        <div class="city-detail-item">
+                            <span class="detail-icon">📍</span>
+                            <span class="detail-text">${decodedAddress}</span>
+                        </div>
+                        <div class="city-detail-item">
+                            <span class="detail-icon">🕒</span>
+                            <span class="detail-text">${decodedWorkingHours}</span>
+                        </div>
+                        <div class="city-detail-item">
+                            <span class="detail-icon">📞</span>
+                            <span class="detail-text">${cityPhone}</span>
+                        </div>
+                        <div class="city-detail-item">
+                            <span class="detail-icon">✉️</span>
+                            <span class="detail-text">${cityEmail}</span>
+                        </div>
+                    </div>
+                    <div class="city-actions">
+                        <button class="btn-primary" onclick="window.location.href='/'">Посмотреть авто</button>
+                        <button class="btn-secondary" onclick="showOnMap('${decodedName}')">Показать на карте</button>
+                        <button class="btn-call" onclick="callNumber('${cityPhone}')">
+                            <span class="btn-icon">📞</span>
+                            Позвонить
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Показываем модальное окно с информацией о городе
+            showCityInfoModal(cityInfoHTML);
             closeCitiesModal();
+        }
+
+        function showCityInfoModal(contentHTML) {
+            // Создаем модальное окно для информации о городе
+            const modal = document.createElement('div');
+            modal.className = 'cities-modal';
+            modal.id = 'cityInfoModal';
+            modal.style.display = 'flex';
+            modal.innerHTML = `
+                <div class="modal-content city-info-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Информация о салоне</h3>
+                        <button class="close-modal" onclick="closeCityInfoModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        ${contentHTML}
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Закрытие при клике вне окна
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeCityInfoModal();
+                }
+            });
+        }
+
+        function closeCityInfoModal() {
+            const modal = document.getElementById('cityInfoModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function showOnMap(cityName) {
+            // Интеграция с Яндекс.Картами
+            const query = encodeURIComponent(cityName + ' CHI AUTO');
+            window.open(`https://yandex.ru/maps/?text=${query}`, '_blank');
+        }
+
+        function callNumber(phoneNumber) {
+            // Очищаем номер от лишних символов
+            const cleanNumber = phoneNumber.replace(/[^\d+]/g, '');
+            window.location.href = `tel:${cleanNumber}`;
         }
 
         // Анимация появления карточек
@@ -131,11 +203,13 @@
 
             // Закрытие модального окна при клике вне его
             const modal = document.getElementById('citiesModal');
-            modal.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    closeCitiesModal();
-                }
-            });
+            if (modal) {
+                modal.addEventListener('click', function(event) {
+                    if (event.target === modal) {
+                        closeCitiesModal();
+                    }
+                });
+            }
         });
     </script>
     {% endblock %}
@@ -166,6 +240,10 @@
             overflow-y: auto;
             border: 1px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .city-info-content {
+            max-width: 600px;
         }
 
         .modal-header {
@@ -219,6 +297,122 @@
             transform: translateX(5px);
         }
 
+        /* Стили для модального окна с информацией о городе */
+        .city-info-modal {
+            padding: 10px 0;
+        }
+
+        .city-info-modal h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .city-description {
+            color: #b0bec5;
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        .city-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .city-detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #ffffff;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-icon {
+            color: #ffd700;
+            font-size: 16px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .detail-text {
+            color: #ffffff;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .city-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .city-actions .btn-primary,
+        .city-actions .btn-secondary,
+        .city-actions .btn-call {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .city-actions .btn-primary {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #0a0f2d;
+        }
+
+        .city-actions .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .city-actions .btn-call {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: #ffffff;
+        }
+
+        .city-actions .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .city-actions .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .city-actions .btn-call:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .modal-body {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .btn-icon {
+            font-size: 16px;
+        }
+
         @media (max-width: 768px) {
             .modal-content {
                 padding: 20px;
@@ -233,6 +427,21 @@
                 padding: 12px 16px;
                 font-size: 14px;
             }
+
+            .city-info-modal h3 {
+                font-size: 20px;
+            }
+
+            .city-detail-item {
+                padding: 8px;
+            }
+
+            .city-actions .btn-primary,
+            .city-actions .btn-secondary,
+            .city-actions .btn-call {
+                padding: 12px 16px;
+                font-size: 13px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -242,6 +451,10 @@
 
             .modal-title {
                 font-size: 18px;
+            }
+
+            .city-info-content {
+                width: 95%;
             }
         }
     </style>
