@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CHI AUTO - Авто из Китая, Японии, Кореи{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🚗</span>
+                CHI AUTO
+            </div>
+            <div class="slogan">Авто под заказ из Китая, Японии, Кореи</div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer Navigation -->
+    <nav class="footer-nav">
+        <button class="nav-item {% if request.endpoint == 'index' %}active{% endif %}" onclick="window.location.href='/'">
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-home"></div>
+            </div>
+            <span class="nav-text">Главная</span>
+        </button>
+
+        <button class="nav-item" onclick="showSection('cars')">
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-cars"></div>
+            </div>
+            <span class="nav-text">Авто</span>
+        </button>
+
+        <button class="nav-item" onclick="showSection('cities')">
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-cities"></div>
+            </div>
+            <span class="nav-text">Города</span>
+        </button>
+
+        <button class="nav-item" onclick="showSection('contacts')">
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-contacts"></div>
+            </div>
+            <span class="nav-text">Контакты</span>
+        </button>
+    </nav>
+
+    <!-- Модальное окно выбора города -->
+    <div id="citiesModal" class="cities-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Выберите город</h3>
+                <button class="close-modal" onclick="closeCitiesModal()">×</button>
+            </div>
+            <div class="cities-list">
+                <button class="city-option" onclick="selectCity('irkutsk')">Иркутск</button>
+                <button class="city-option" onclick="selectCity('moscow')">Москва</button>
+                <button class="city-option" onclick="selectCity('barnaul')">Барнаул</button>
+                <button class="city-option" onclick="selectCity('abakan')">Абакан</button>
+                <button class="city-option" onclick="selectCity('ulan-ude')">Улан-Удэ</button>
+                <button class="city-option" onclick="selectCity('sochi')">Сочи</button>
+                <button class="city-option" onclick="selectCity('krasnoyarsk')">Красноярск</button>
+                <button class="city-option" onclick="selectCity('ekaterinburg')">Екатеринбург</button>
+                <button class="city-option" onclick="selectCity('novosibirsk')">Новосибирск</button>
+            </div>
+        </div>
+    </div>
+
+    {% block scripts %}
+    <script>
+        function showSection(sectionName) {
+            // Убрать активный класс со всех кнопок
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Активировать нажатую кнопку
+            event.target.classList.add('active');
+
+            if (sectionName === 'cities') {
+                showCitiesModal();
+            } else if (sectionName === 'contacts') {
+                window.location.href = '/contacts';
+            }
+            console.log('Переключение на раздел:', sectionName);
+        }
+
+        // Функции для работы с модальным окном городов
+        function showCitiesModal() {
+            document.getElementById('citiesModal').style.display = 'flex';
+        }
+
+        function closeCitiesModal() {
+            document.getElementById('citiesModal').style.display = 'none';
+        }
+
+        function selectCity(cityId) {
+            const selectedCity = {
+                'irkutsk': 'Иркутск',
+                'moscow': 'Москва',
+                'barnaul': 'Барнаул',
+                'abakan': 'Абакан',
+                'ulan-ude': 'Улан-Удэ',
+                'sochi': 'Сочи',
+                'krasnoyarsk': 'Красноярск',
+                'ekaterinburg': 'Екатеринбург',
+                'novosibirsk': 'Новосибирск'
+            };
+
+            alert('Выбран город: ' + (selectedCity[cityId] || 'Неизвестный город'));
+            closeCitiesModal();
+        }
+
+        // Анимация появления карточек
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.car-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('animate-in');
+            });
+
+            // Закрытие модального окна при клике вне его
+            const modal = document.getElementById('citiesModal');
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeCitiesModal();
+                }
+            });
+        });
+    </script>
+    {% endblock %}
+
+    <style>
+        /* Модальное окно выбора города */
+        .cities-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(30, 35, 75, 0.95) 0%, rgba(20, 25, 55, 0.95) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            color: #ffd700;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: #b0bec5;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #ffd700;
+        }
+
+        .cities-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .city-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            border: none;
+            font-size: 16px;
+        }
+
+        .city-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .city-option {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 15px;
+            }
+
+            .modal-title {
+                font-size: 18px;
+            }
+        }
+    </style>
+</body>
+</html>

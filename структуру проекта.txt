@@ -1,0 +1,33 @@
+car_sales_project/
+│
+├── app.py
+├── cars_data.py
+├── requirements.txt
+│
+├── templates/
+│   ├── base.html
+│   ├── index.html
+│   ├── car_detail.html
+│   └── cars/
+│       ├── geely_coolray.html
+│       ├── haval_jolion.html
+│       ├── chery_tiggo8.html
+│       ├── toyota_camry.html
+│       ├── hyundai_tucson.html
+│       └── kia_sportage.html
+│
+├── static/
+│   ├── style.css
+│   ├── car-detail.css
+│   └── images/
+│       ├── geely-coolray.jpg
+│       ├── haval-jolion.jpg
+│       ├── chery-tiggo8.jpg
+│       ├── toyota-camry.jpg
+│       ├── hyundai-tucson.jpg
+│       └── kia-sportage.jpg
+│
+└── data/
+    ├── __init__.py
+    ├── cars_in_stock.py
+    └── cars_on_order.py
