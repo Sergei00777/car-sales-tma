@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}Авто в наличии - CHI AUTO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='in-stock.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="stock-content">
+    <!-- Заголовок страницы -->
+    <div class="page-header">
+        <h1 class="page-title">Авто в наличии</h1>
+        <p class="page-subtitle">
+            Международная сеть автосалонов CHI AUTO предлагает выгодные цены на новые автомобили
+            китайских марок в наличии и под заказ. Надежно, прозрачно, проверено!
+        </p>
+    </div>
+
+    <!-- Основная информация -->
+    <div class="info-card">
+        <h2>Почему выбирают CHI AUTO?</h2>
+
+        <div class="company-description">
+            <p><strong>CHI AUTO</strong> - это не только автодилер, но и логистическая компания с центральным офисом в Манчжурии и Иркутске.</p>
+
+            <p>Специализируемся на продаже новых автомобилей и автомобилей с пробегом китайского производства:
+                <strong>Avatr, BYD, Changan, Chery, Exeed, GAC, Geely, Li, Voyah, Zeekr</strong> и других.
+            </p>
+        </div>
+
+        <h3 class="highlight-text">Наши преимущества</h3>
+
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <div class="benefit-icon">💰</div>
+                <h4 class="benefit-title">Выгодные цены</h4>
+                <p class="benefit-description">Прямые поставки из Китая позволяют предлагать лучшие цены на рынке</p>
+            </div>
+
+            <div class="benefit-item">
+                <div class="benefit-icon">⚖️</div>
+                <h4 class="benefit-title">Юридическая чистота</h4>
+                <p class="benefit-description">Все сделки оформляются официально, полный пакет документов</p>
+            </div>
+
+            <div class="benefit-item">
+                <div class="benefit-icon">🛡️</div>
+                <h4 class="benefit-title">Надежность</h4>
+                <p class="benefit-description">Официальная гарантия производителя, сервисное обслуживание</p>
+            </div>
+        </div>
+
+        <!-- Кнопки действий -->
+        <h3 class="highlight-text">Связаться с нами</h3>
+
+        <div class="action-buttons-grid">
+            <a href="https://auto.drom.ru/dealer321561/" target="_blank" class="action-btn btn-drom">
+                <span>🚗</span>
+                Наш Drom.ru
+            </a>
+
+            <a href="https://t.me/CHIAUTO_RU" target="_blank" class="action-btn btn-telegram">
+                <span>📢</span>
+                Telegram канал
+            </a>
+
+            <a href="https://vk.com/chiautorf" target="_blank" class="action-btn btn-vk">
+                <span>📘</span>
+                Группа ВКонтакте
+            </a>
+
+            <a href="https://wa.me/79016668668" target="_blank" class="action-btn btn-whatsapp">
+                <span>💬</span>
+                WhatsApp
+            </a>
+
+            <a href="tel:+79016668668" class="action-btn btn-phone">
+                <span>📞</span>
+                Позвонить
+            </a>
+
+            <a href="mailto:officechi@chi-auto.ru" class="action-btn btn-email">
+                <span>✉️</span>
+                Написать email
+            </a>
+
+            <a href="https://chi-auto.ru" target="_blank" class="action-btn btn-website">
+                <span>🌐</span>
+                Наш сайт
+            </a>
+        </div>
+
+        <!-- Контакты менеджеров -->
+        <div class="managers-section">
+            <h3>Менеджеры по продажам</h3>
+            <div class="phone-number">
+                <a href="tel:+79019397015">+7‒901‒939‒70‒15</a>
+            </div>
+            <div class="phone-number">
+                <a href="tel:+73952504888">+7 (3952) 50-48-88</a>
+            </div>
+            <p style="color: #b0bec5; text-align: center; margin-top: 10px;">
+                Работаем ежедневно с 9:00 до 19:00
+            </p>
+        </div>
+
+        <!-- Наши услуги -->
+        <h3 class="highlight-text" style="margin-top: 40px;">Наши услуги</h3>
+
+        <div class="services-grid">
+            <div class="service-item">
+                <h4>Страхование и кредитование</h4>
+                <p>Помогаем оформить кредит и страховку на выгодных условиях</p>
+            </div>
+
+            <div class="service-item">
+                <h4>Лизинг</h4>
+                <p>Выгодные программы лизинга для физических и юридических лиц</p>
+            </div>
+
+            <div class="service-item">
+                <h4>Своя экспортная компания</h4>
+                <p>Прямые поставки из Китая, офис в Манчжурии</p>
+            </div>
+
+            <div class="service-item">
+                <h4>Авто с пробегом под заказ</h4>
+                <p>Подбор и доставка автомобилей с пробегом из Китая</p>
+            </div>
+
+            <div class="service-item">
+                <h4>Тест-драйв</h4>
+                <p>Возможность тест-драйва перед покупкой</p>
+            </div>
+
+            <div class="service-item">
+                <h4>Trade-in</h4>
+                <p>Обмен вашего автомобиля на новый с выгодной доплатой</p>
+            </div>
+        </div>
+
+        <!-- Города присутствия -->
+        <div class="cities-section">
+            <h3>Города присутствия</h3>
+            <div class="cities-list">
+                <span class="city-tag">Иркутск</span>
+                <span class="city-tag">Улан-Удэ</span>
+                <span class="city-tag">Сочи</span>
+                <span class="city-tag">Новая Адыгея</span>
+                <span class="city-tag">Красноярск</span>
+                <span class="city-tag">Москва</span>
+                <span class="city-tag">Барнаул</span>
+                <span class="city-tag">Абакан</span>
+                <span class="city-tag">Екатеринбург</span>
+                <span class="city-tag">Новосибирск</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    // Анимация появления элементов
+    document.addEventListener('DOMContentLoaded', function() {
+        const items = document.querySelectorAll('.benefit-item, .service-item, .city-tag');
+        items.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                item.style.transition = 'all 0.5s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,16 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <!-- Кнопки переключения -->
+    <!-- Кнопка для авто под заказ -->
     <div class="tabs-container">
-        <button class="tab-btn active" onclick="switchTab('in-stock')">
-            <div class="tab-icon-wrapper">
-                <div class="tab-icon icon-stock"></div>
-            </div>
-            <span class="tab-text">Авто в наличии</span>
-            <span class="car-count">{{ in_stock_cars|length }}</span>
-        </button>
-        <button class="tab-btn" onclick="switchTab('on-order')">
+        <button class="tab-btn active">
             <div class="tab-icon-wrapper">
                 <div class="tab-icon icon-order"></div>
             </div>
@@ -19,39 +12,8 @@
         </button>
     </div>
 
-    <!-- Авто в наличии -->
-    <div id="in-stock" class="tab-content active">
-        {% for car_id, car in in_stock_cars.items() %}
-        <div class="car-card">
-            <div class="car-image">
-                <img src="{{ url_for('static', filename=car.images[0]) }}" alt="{{ car.brand }}" onerror="this.style.display='none'">
-                <div class="car-status in-stock">{{ car.status }}</div>
-            </div>
-            <div class="car-info">
-                <div class="car-brand">{{ car.brand }}</div>
-                <div class="car-specs">
-                    <span class="spec">{{ car.year }} год</span>
-                    <span class="spec">{{ car.engine }}</span>
-                    <span class="spec">{{ car.transmission }}</span>
-                    <span class="spec">{{ car.drive }}</span>
-                </div>
-                <div class="car-features">
-                    {% for feature in car.features[:3] %}
-                    <span class="feature">{{ feature }}</span>
-                    {% endfor %}
-                </div>
-                <div class="car-price">{{ car.price }} ₽</div>
-                <button class="details-btn" onclick="window.location.href='/car/{{ car_id }}'">
-                    Подробнее
-                    <span class="btn-arrow">→</span>
-                </button>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-
     <!-- Авто под заказ -->
-    <div id="on-order" class="tab-content">
+    <div id="on-order" class="tab-content active">
         {% for car_id, car in on_order_cars.items() %}
         <div class="car-card">
             <div class="car-image">
@@ -88,18 +50,6 @@
 {% block scripts %}
 {{ super() }}
 <script>
-    function switchTab(tabName) {
-        // Убрать активный класс со всех кнопок и контента
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.remove('active');
-        });
-
-        // Активировать выбранную кнопку и контент
-        event.target.classList.add('active');
-        document.getElementById(tabName).classList.add('active');
-    }
+    // Убрал функцию switchTab так как теперь только одна вкладка
 </script>
 {% endblock %}

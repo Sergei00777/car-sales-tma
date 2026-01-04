@@ -16,7 +16,7 @@ def car_detail(car_id):
     car = cars_data.get(car_id)
     if car:
         template_name = f'cars/{car_id.replace("-", "_")}.html'
-        return render_template(template_name, car=car, car_id=car_id, cities=cities_data)  # Добавляем cities
+        return render_template(template_name, car=car, car_id=car_id, cities=cities_data)
     else:
         return "Автомобиль не найден", 404
 
@@ -27,6 +27,15 @@ def contacts():
 @app.route('/faq')
 def faq():
     return render_template('faq.html', cities=cities_data)
+
+@app.route('/in-stock')
+def in_stock():
+    return render_template('in_stock.html', cities=cities_data)
+
+# НОВЫЙ МАРШРУТ ДЛЯ СТРАНИЦЫ СЕРВИСА
+@app.route('/service')
+def service():
+    return render_template('service.html', cities=cities_data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

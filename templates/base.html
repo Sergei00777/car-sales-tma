@@ -12,7 +12,6 @@
     <header class="header">
         <div class="header-content">
             <div class="logo">
-                <img src="{{ url_for('static', filename='images/logoCHI.jpg') }}" alt="CHI AUTO" class="logo-image">
                 CHI AUTO
             </div>
             <div class="slogan">Авто под заказ из Китая, Японии, Кореи</div>
@@ -33,7 +32,7 @@
             <span class="nav-text">Главная</span>
         </button>
 
-        <button class="nav-item" onclick="showSection('cars')">
+        <button class="nav-item {% if request.endpoint == 'in_stock' %}active{% endif %}" onclick="window.location.href='/in-stock'">
             <div class="nav-icon-wrapper">
                 <div class="nav-icon icon-cars"></div>
             </div>
@@ -47,15 +46,23 @@
             <span class="nav-text">Города</span>
         </button>
 
-        <!-- НОВАЯ КНОПКА FAQ -->
-        <button class="nav-item" onclick="showSection('faq')">
+        <!-- КНОПКА СЕРВИС -->
+        <button class="nav-item {% if request.endpoint == 'service' %}active{% endif %}" onclick="window.location.href='/service'">
+            <div class="nav-icon-wrapper">
+                <div class="nav-icon icon-service"></div>
+            </div>
+            <span class="nav-text">Сервис</span>
+        </button>
+
+        <!-- КНОПКА FAQ -->
+        <button class="nav-item {% if request.endpoint == 'faq' %}active{% endif %}" onclick="window.location.href='/faq'">
             <div class="nav-icon-wrapper">
                 <div class="nav-icon icon-faq"></div>
             </div>
             <span class="nav-text">FAQ</span>
         </button>
 
-        <button class="nav-item" onclick="showSection('contacts')">
+        <button class="nav-item {% if request.endpoint == 'contacts' %}active{% endif %}" onclick="window.location.href='/contacts'">
             <div class="nav-icon-wrapper">
                 <div class="nav-icon icon-contacts"></div>
             </div>
@@ -97,6 +104,8 @@
                 window.location.href = '/contacts';
             } else if (sectionName === 'faq') {
                 window.location.href = '/faq';
+            } else if (sectionName === 'service') {
+                window.location.href = '/service';
             }
             console.log('Переключение на раздел:', sectionName);
         }
@@ -220,7 +229,36 @@
                     }
                 });
             }
+
+            // Автоматическое обновление активного состояния кнопок
+            updateActiveNav();
         });
+
+        // Функция для обновления активного состояния кнопок
+        function updateActiveNav() {
+            const currentPath = window.location.pathname;
+            const navItems = document.querySelectorAll('.nav-item');
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+
+                // Проверяем, соответствует ли путь кнопки текущему пути
+                const onclick = item.getAttribute('onclick');
+                if (onclick) {
+                    if (onclick.includes("'/") && onclick.includes("'")) {
+                        const urlStart = onclick.indexOf("'") + 1;
+                        const urlEnd = onclick.indexOf("'", urlStart);
+                        const buttonUrl = onclick.substring(urlStart, urlEnd);
+
+                        if (currentPath === buttonUrl ||
+                            (buttonUrl === '/' && currentPath === '') ||
+                            (currentPath.startsWith(buttonUrl) && buttonUrl !== '/')) {
+                            item.classList.add('active');
+                        }
+                    }
+                }
+            });
+        }
     </script>
     {% endblock %}
 
@@ -231,7 +269,7 @@
             width: auto;
             margin-right: 10px;
             vertical-align: middle;
-            filter: brightness(0) invert(1); /* Делает логотип белым */
+            filter: brightness(0) invert(1);
         }
 
         .logo {
@@ -256,10 +294,20 @@
             }
         }
 
+        /* Иконка Сервиса */
+        .icon-service {
+            background: #b0bec5;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z'/%3E") no-repeat center;
+        }
+
+        .nav-item.active .icon-service {
+            background: #ffffff;
+        }
+
         /* Иконка FAQ */
         .icon-faq {
             background: #b0bec5;
-            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z'/%3E") no-repeat center;
         }
 
         .nav-item.active .icon-faq {

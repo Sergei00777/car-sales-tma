@@ -1,0 +1,945 @@
+{% extends "base.html" %}
+
+{% block title %}{{ car.brand }} - CHI AUTO{% endblock %}
+
+{% block extra_css %}
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<style>
+    /* Дополнительные стили для вкладок */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        padding-bottom: 100px;
+    }
+
+    .back-button {
+        margin-bottom: 20px;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #b0bec5;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        padding: 12px 20px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        font-size: 14px;
+        border: none;
+    }
+
+    .back-btn:hover {
+        color: #ffd700;
+        transform: translateX(-5px);
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .back-icon {
+        font-size: 16px;
+    }
+
+    .car-detail {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .car-gallery {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .main-image {
+        background: linear-gradient(135deg, #2a2f5d, #1c2145);
+        border-radius: 20px;
+        overflow: hidden;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .main-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .image-thumbnails {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 10px 0;
+    }
+
+    .thumbnail {
+        flex: 0 0 auto;
+        width: 80px;
+        height: 60px;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+        background: linear-gradient(135deg, #2a2f5d, #1c2145);
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .thumbnail:hover {
+        border-color: #ffd700;
+        transform: scale(1.05);
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .car-detail-info {
+        background: linear-gradient(135deg, rgba(30, 35, 75, 0.9) 0%, rgba(20, 25, 55, 0.9) 100%);
+        border-radius: 20px;
+        padding: 30px;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .car-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .car-title {
+        font-size: 28px;
+        color: #ffffff;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .car-status {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .car-status.in-stock {
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
+    }
+
+    .car-status.on-order {
+        background: linear-gradient(135deg, #2196f3, #1976d2);
+        color: white;
+    }
+
+    .car-price-large {
+        font-size: 32px;
+        color: #ffd700;
+        font-weight: bold;
+        margin: 10px 0;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    /* Сетка характеристик */
+    .specs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 0;
+    }
+
+    .spec-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .spec-label {
+        color: #b0bec5;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .spec-value {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: right;
+    }
+
+    /* Табы на странице деталей */
+    .car-detail-tabs {
+        display: flex;
+        background: rgba(20, 25, 55, 0.8);
+        border-radius: 15px;
+        padding: 8px;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        margin-bottom: 30px;
+        gap: 8px;
+    }
+
+    .car-tab {
+        flex: 1;
+        padding: 15px 20px;
+        background: transparent;
+        border: none;
+        border-radius: 12px;
+        color: #b0bec5;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .car-tab.active {
+        background: linear-gradient(135deg, #ffd700, #ffed4e);
+        color: #0a0f2d;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .car-tab:hover:not(.active) {
+        color: #ffd700;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Контент табов на странице деталей */
+    .detail-tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .detail-tab-content.active {
+        display: block;
+    }
+
+    /* Спецификации */
+    .detail-specs {
+        background: linear-gradient(135deg, rgba(30, 35, 75, 0.9) 0%, rgba(20, 25, 55, 0.9) 100%);
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 25px;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .spec-group {
+        margin-bottom: 25px;
+    }
+
+    .spec-group:last-child {
+        margin-bottom: 0;
+    }
+
+    .spec-group h4 {
+        color: #ffd700;
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+
+    .spec-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .spec-row:last-child {
+        border-bottom: none;
+    }
+
+    .spec-label {
+        color: #b0bec5;
+        font-size: 14px;
+    }
+
+    .spec-value {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    /* Галерея фото */
+    .photos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .photo-item {
+        border-radius: 15px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #2a2f5d, #1c2145);
+        height: 200px;
+    }
+
+    .photo-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .photo-item:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Видео */
+    .videos-list {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .video-item {
+        background: linear-gradient(135deg, rgba(30, 35, 75, 0.9) 0%, rgba(20, 25, 55, 0.9) 100%);
+        border-radius: 20px;
+        padding: 25px;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .video-container {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #000;
+        margin-bottom: 10px;
+        height: 300px;
+    }
+
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+
+    .video-loader i {
+        font-size: 32px;
+        margin-bottom: 10px;
+        color: #ffd700;
+    }
+
+    /* История обслуживания */
+    .history-timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+
+    .history-timeline::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, #ffd700, transparent);
+    }
+
+    .history-item {
+        position: relative;
+        margin-bottom: 25px;
+        padding: 20px;
+        background: rgba(30, 35, 75, 0.6);
+        border-radius: 12px;
+        border-left: 3px solid #ffd700;
+    }
+
+    .history-item::before {
+        content: '';
+        position: absolute;
+        left: -33px;
+        top: 25px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #ffd700;
+    }
+
+    .history-date {
+        color: #ffd700;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .history-event {
+        color: #ffffff;
+        margin-bottom: 8px;
+    }
+
+    .history-details {
+        color: #b0bec5;
+        font-size: 14px;
+    }
+
+    /* Особенности */
+    .features-section h3 {
+        color: #ffd700;
+        margin-bottom: 15px;
+        font-size: 18px;
+        border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        padding-bottom: 5px;
+    }
+
+    .features-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #ffffff;
+        font-size: 14px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border-left: 3px solid #4caf50;
+    }
+
+    .feature-icon {
+        color: #4caf50;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    /* Описание */
+    .description-section h3 {
+        color: #ffd700;
+        margin-bottom: 15px;
+        font-size: 18px;
+        border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        padding-bottom: 5px;
+    }
+
+    /* Кнопки действий */
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .contact-btn, .test-drive-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 16px 24px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .contact-btn {
+        background: linear-gradient(135deg, #2196f3, #1976d2);
+        color: white;
+        box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    .test-drive-btn {
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .contact-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+    }
+
+    .test-drive-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+    }
+
+    .btn-icon {
+        font-size: 20px;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        .car-detail {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .main-image {
+            height: 300px;
+        }
+
+        .car-detail-info {
+            padding: 20px;
+        }
+
+        .car-title {
+            font-size: 24px;
+        }
+
+        .car-price-large {
+            font-size: 28px;
+        }
+
+        .car-detail-tabs {
+            flex-direction: column;
+        }
+
+        .photos-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .specs-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .spec-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .video-container {
+            height: 200px;
+        }
+
+        .history-timeline {
+            padding-left: 20px;
+        }
+
+        .history-item::before {
+            left: -23px;
+        }
+
+        .car-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .spec-item {
+            padding: 8px 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .car-detail-info {
+            padding: 15px;
+        }
+
+        .car-title {
+            font-size: 20px;
+        }
+
+        .car-price-large {
+            font-size: 24px;
+        }
+
+        .contact-btn, .test-drive-btn {
+            padding: 15px 20px;
+            font-size: 14px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Кнопка назад -->
+    <div class="back-button">
+        <button class="back-btn" onclick="goBack()">
+            <div class="back-icon">←</div>
+            Назад
+        </button>
+    </div>
+
+    <!-- Основная информация -->
+    <div class="car-detail">
+        <div class="car-gallery">
+            <div class="main-image">
+                <img src="{{ url_for('static', filename=car.images[0]) }}" alt="{{ car.brand }}" onerror="this.style.display='none'">
+            </div>
+            <div class="image-thumbnails">
+                {% for image in car.images %}
+                <div class="thumbnail">
+                    <img src="{{ url_for('static', filename=image) }}" alt="{{ car.brand }}" onerror="this.style.display='none'">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="car-detail-info">
+            <div class="car-header">
+                <h1 class="car-title">{{ car.brand }}</h1>
+                <div class="car-status {{ car.status_class }}">{{ car.status }}</div>
+            </div>
+
+            <div class="car-price-large">{{ car.price }} ₽</div>
+
+            <!-- Основные характеристики -->
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <span class="spec-label">Год выпуска:</span>
+                    <span class="spec-value">{{ car.year }}</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Двигатель:</span>
+                    <span class="spec-value">{{ car.engine }}</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Коробка:</span>
+                    <span class="spec-value">{{ car.transmission }}</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Привод:</span>
+                    <span class="spec-value">{{ car.drive }}</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Пробег:</span>
+                    <span class="spec-value">{{ car.mileage }}</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Цвет:</span>
+                    <span class="spec-value">{{ car.color }}</span>
+                </div>
+            </div>
+
+            <!-- Особенности -->
+            <div class="features-section">
+                <h3>Особенности</h3>
+                <div class="features-grid">
+                    {% for feature in car.features %}
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        {{ feature }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Описание -->
+            <div class="description-section">
+                <h3>Описание</h3>
+                <p style="color: #b0bec5; line-height: 1.6;">{{ car.description }}</p>
+            </div>
+
+            <!-- Кнопки действий -->
+            <div class="action-buttons">
+                <button class="contact-btn" onclick="showContactForm()">
+                    <span class="btn-icon">📞</span>
+                    Связаться с менеджером
+                </button>
+                <button class="test-drive-btn" onclick="requestTestDrive()">
+                    <span class="btn-icon">🚗</span>
+                    Запись на тест-драйв
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Табы для переключения разделов -->
+    <div class="car-detail-tabs">
+        <button class="car-tab active" onclick="openTab('info')">Характеристики</button>
+        <button class="car-tab" onclick="openTab('history')">История</button>
+        <button class="car-tab" onclick="openTab('photos')">Фото</button>
+        <button class="car-tab" onclick="openTab('videos')">Видео</button>
+    </div>
+
+    <!-- Контент табов -->
+    <div id="info" class="detail-tab-content active">
+        <div class="detail-specs">
+            <div class="spec-group">
+                <h4>Основные характеристики</h4>
+                <div class="spec-row">
+                    <span class="spec-label">Марка и модель</span>
+                    <span class="spec-value">{{ car.brand }}</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Год выпуска</span>
+                    <span class="spec-value">{{ car.year }}</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Пробег</span>
+                    <span class="spec-value">{{ car.mileage }}</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Состояние</span>
+                    <span class="spec-value">Идеальное</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Кузов</span>
+                    <span class="spec-value">Кроссовер</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Руль</span>
+                    <span class="spec-value">Левый</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Цвет</span>
+                    <span class="spec-value">{{ car.color }}</span>
+                </div>
+            </div>
+
+            <div class="spec-group">
+                <h4>Двигатель</h4>
+                <div class="spec-row">
+                    <span class="spec-label">Тип двигателя</span>
+                    <span class="spec-value">Бензиновый</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Объем</span>
+                    <span class="spec-value">1.5 л</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Мощность</span>
+                    <span class="spec-value">150 л.с.</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Крутящий момент</span>
+                    <span class="spec-value">255 Н·м</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Трансмиссия</span>
+                    <span class="spec-value">7-ступенчатая робот</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Привод</span>
+                    <span class="spec-value">Передний</span>
+                </div>
+            </div>
+
+            <div class="spec-group">
+                <h4>Эксплуатационные показатели</h4>
+                <div class="spec-row">
+                    <span class="spec-label">Разгон 0-100 км/ч</span>
+                    <span class="spec-value">8.9 сек</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Максимальная скорость</span>
+                    <span class="spec-value">190 км/ч</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Расход топлива</span>
+                    <span class="spec-value">7.2 л/100км</span>
+                </div>
+            </div>
+
+            <div class="spec-group">
+                <h4>Комфорт и безопасность</h4>
+                <div class="spec-row">
+                    <span class="spec-label">Кондиционер</span>
+                    <span class="spec-value">Климат-контроль</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Круиз-контроль</span>
+                    <span class="spec-value">Адаптивный</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Парковочные датчики</span>
+                    <span class="spec-value">Передние и задние</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Камера заднего вида</span>
+                    <span class="spec-value">360°</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Система помощи</span>
+                    <span class="spec-value">ABS, ESP, Lane Assist</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Вкладка истории -->
+    <div id="history" class="detail-tab-content">
+        <div class="detail-specs">
+            <h3 style="color: #ffd700; margin-bottom: 20px;">История обслуживания</h3>
+            <div class="history-timeline">
+                <div class="history-item">
+                    <div class="history-date">Март 2024</div>
+                    <div class="history-event">Плановое ТО</div>
+                    <div class="history-details">Замена масла и фильтров, диагностика систем</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-date">Декабрь 2023</div>
+                    <div class="history-event">Замена шин</div>
+                    <div class="history-details">Установлена зимняя резина</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-date">Сентябрь 2023</div>
+                    <div class="history-event">Диагностика ходовой</div>
+                    <div class="history-details">Проверка подвески и тормозной системы</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-date">Июнь 2023</div>
+                    <div class="history-event">Покупка автомобиля</div>
+                    <div class="history-details">Автомобиль приобретен у официального дилера</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Вкладка фото -->
+    <div id="photos" class="detail-tab-content">
+        <div class="detail-specs">
+            <h3 style="color: #ffd700; margin-bottom: 20px;">Галерея фото</h3>
+            <div class="photos-grid">
+                <div class="photo-item">
+                    <img src="{{ url_for('static', filename='images/geely_coolray_ext1.jpg') }}" alt="Geely Coolray - Вид спереди" onerror="this.style.display='none'">
+                </div>
+                <div class="photo-item">
+                    <img src="{{ url_for('static', filename='images/geely_coolray_ext2.jpg') }}" alt="Geely Coolray - Вид сбоку" onerror="this.style.display='none'">
+                </div>
+                <div class="photo-item">
+                    <img src="{{ url_for('static', filename='images/geely_coolray_int1.jpg') }}" alt="Geely Coolray - Салон" onerror="this.style.display='none'">
+                </div>
+                <div class="photo-item">
+                    <img src="{{ url_for('static', filename='images/geely_coolray_int2.jpg') }}" alt="Geely Coolray - Панель приборов" onerror="this.style.display='none'">
+                </div>
+                <div class="photo-item">
+                    <img src="{{ url_for('static', filename='images/geely_coolray_ext3.jpg') }}" alt="Geely Coolray - Вид сзади" onerror="this.style.display='none'">
+                </div>
+                <div class="photo-item">
+                    <img src="{{ url_for('static', filename='images/geely_coolray_engine.jpg') }}" alt="Geely Coolray - Двигатель" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Вкладка видео -->
+    <div id="videos" class="detail-tab-content">
+        <div class="detail-specs">
+            <h3 style="color: #ffd700; margin-bottom: 20px;">Видеообзоры</h3>
+            <div class="videos-list">
+                <div class="video-item">
+                    <div class="video-container">
+                        <video controls poster="{{ url_for('static', filename='images/geely_video_thumb1.jpg') }}">
+                            <source src="{{ url_for('static', filename='videos/geely_overview.mp4') }}" type="video/mp4">
+                            Ваш браузер не поддерживает видео тег.
+                        </video>
+                    </div>
+                    <h4 style="color: white; margin-bottom: 10px;">Обзор Geely Coolray 2023</h4>
+                    <p style="color: #b0bec5;">Полный обзор возможностей и характеристик автомобиля</p>
+                </div>
+                <div class="video-item">
+                    <div class="video-container">
+                        <video controls poster="{{ url_for('static', filename='images/geely_video_thumb2.jpg') }}">
+                            <source src="{{ url_for('static', filename='videos/geely_test_drive.mp4') }}" type="video/mp4">
+                            Ваш браузер не поддерживает видео тег.
+                        </video>
+                    </div>
+                    <h4 style="color: white; margin-bottom: 10px;">Тест-драйв в городских условиях</h4>
+                    <p style="color: #b0bec5;">Повседневное использование автомобиля в городе</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Контейнер для модального окна -->
+<div id="modalContainer"></div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    function showContactForm() {
+        alert('Форма связи с менеджером по авто: {{ car.brand }}');
+    }
+
+    function requestTestDrive() {
+        alert('Запись на тест-драйв: {{ car.brand }}');
+    }
+
+    // Функция переключения табов
+    function openTab(tabName) {
+        // Скрыть все табы
+        const tabContents = document.getElementsByClassName('detail-tab-content');
+        for (let i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+
+        // Убрать активный класс со всех кнопок
+        const tabButtons = document.getElementsByClassName('car-tab');
+        for (let i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].classList.remove('active');
+        }
+
+        // Показать выбранный таб и активировать кнопку
+        document.getElementById(tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // Обработка кликов на миниатюры
+    document.addEventListener('DOMContentLoaded', function() {
+        const thumbnails = document.querySelectorAll('.thumbnail img');
+        const mainImage = document.querySelector('.main-image img');
+
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                mainImage.src = this.src;
+            });
+        });
+
+        // Обработка видео
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.addEventListener('loadstart', function() {
+                this.nextElementSibling.style.display = 'flex';
+            });
+
+            video.addEventListener('canplay', function() {
+                this.nextElementSibling.style.display = 'none';
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}Honda Vezel (Binzhi) - CHI AUTO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='car-detail.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="back-button">
+        <button class="back-btn" onclick="goBack()">
+            <div class="back-icon">←</div>
+            Назад
+        </button>
+    </div>
+
+    <div class="car-detail">
+        <!-- Галерея изображений -->
+        <div class="car-gallery">
+            <div class="main-image">
+                <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-1.jpg') }}"
+                     alt="Honda Vezel (Binzhi)"
+                     onerror="this.src='{{ url_for('static', filename='images/no-photo.jpg') }}'">
+            </div>
+            <div class="image-thumbnails">
+                <div class="thumbnail">
+                    <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-1.jpg') }}"
+                         alt="Honda Vezel вид спереди">
+                </div>
+                <div class="thumbnail">
+                    <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-2.jpg') }}"
+                         alt="Honda Vezel вид сбоку">
+                </div>
+                <div class="thumbnail">
+                    <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-3.jpg') }}"
+                         alt="Honda Vezel салон">
+                </div>
+                <div class="thumbnail">
+                    <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-4.jpg') }}"
+                         alt="Honda Vezel приборная панель">
+                </div>
+            </div>
+        </div>
+
+        <!-- Основная информация -->
+        <div class="car-detail-info">
+            <div class="car-header">
+                <h1 class="car-title">Honda Vezel (Binzhi)</h1>
+                <div class="car-status on-order">Под заказ</div>
+            </div>
+
+            <div class="car-price-large">1 345 000 ₽</div>
+            <div class="car-price-cny">72 000 ¥</div>
+
+            <!-- Характеристики -->
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <span class="spec-label">Год выпуска:</span>
+                    <span class="spec-value">2022</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Двигатель:</span>
+                    <span class="spec-value">1.5L Hybrid (131 л.с.)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Коробка:</span>
+                    <span class="spec-value">Вариатор (CVT)</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Привод:</span>
+                    <span class="spec-value">Передний</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Пробег:</span>
+                    <span class="spec-value">47 000 км</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Цвет:</span>
+                    <span class="spec-value">Серый металлик</span>
+                </div>
+            </div>
+
+            <!-- Доставка -->
+            <div class="delivery-section">
+                <h3>Доставка</h3>
+                <div class="delivery-info">
+                    <span class="delivery-icon">🚚</span>
+                    <span class="delivery-text">Доставка до Иркутска</span>
+                </div>
+                <div class="delivery-info">
+                    <span class="delivery-icon">⏱</span>
+                    <span class="delivery-text">Срок доставки: 40-55 дней</span>
+                </div>
+            </div>
+
+            <!-- Особенности -->
+            <div class="features-section">
+                <h3>Особенности</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        Гибридная система
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        Экономичный расход: 4.5 л/100км
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        Система безопасности Honda SENSING
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        Камера заднего вида
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        Климат-контроль
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        Легкосплавные диски 17"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Описание -->
+            <div class="description-section">
+                <h3>Описание</h3>
+                <p>Honda Vezel 2022 года (также известный как Honda HR-V) - компактный кроссовер-гибрид с низким расходом топлива. Автомобиль в отличном состоянии, полное ТО пройдено.</p>
+            </div>
+
+            <!-- Кнопки действий -->
+            <div class="action-buttons">
+                <button class="contact-btn" onclick="showContactForm()">
+                    <span class="btn-icon">📞</span>
+                    Заказать Honda Vezel
+                </button>
+                <button class="test-drive-btn" onclick="requestTestDrive()">
+                    <span class="btn-icon">🚗</span>
+                    Запись на тест-драйв
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.car-price-cny {
+    font-size: 1.2em;
+    color: #ff9800;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.delivery-section {
+    background: rgba(33, 150, 243, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.delivery-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.delivery-info:last-child {
+    margin-bottom: 0;
+}
+
+.delivery-icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+.contact-btn {
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.test-drive-btn {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.test-drive-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+}
+
+.btn-icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    function showContactForm() {
+        alert('Заказ Honda Vezel\n\nЦена: 1 345 000 ₽\nОставьте ваш номер телефона:');
+    }
+
+    function requestTestDrive() {
+        alert('Запись на тест-драйв Honda Vezel\n\nДоступен в Иркутске после доставки');
+    }
+
+    // Обработка кликов на миниатюры
+    document.addEventListener('DOMContentLoaded', function() {
+        const thumbnails = document.querySelectorAll('.thumbnail img');
+        const mainImage = document.querySelector('.main-image img');
+
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                mainImage.src = this.src;
+                mainImage.alt = this.alt;
+            });
+        });
+    });
+</script>
+{% endblock %}
