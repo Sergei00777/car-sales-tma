@@ -27,21 +27,30 @@
     <nav class="footer-nav">
         <button class="nav-item {% if request.endpoint == 'index' %}active{% endif %}" onclick="window.location.href='/'">
             <div class="nav-icon-wrapper">
-                <div class="nav-icon icon-home"></div>
+                <!-- Иконка дома -->
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 20V14H14V20H19V12H22L12 3L2 12H5V20H10Z" fill="currentColor"/>
+                </svg>
             </div>
             <span class="nav-text">Главная</span>
         </button>
 
         <button class="nav-item {% if request.endpoint == 'in_stock' %}active{% endif %}" onclick="window.location.href='/in-stock'">
             <div class="nav-icon-wrapper">
-                <div class="nav-icon icon-cars"></div>
+                <!-- Иконка автомобиля -->
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.29 5.42 5.08 6.01L3 12V20C3 20.55 3.45 21 4 21H5C5.55 21 6 20.55 6 20V19H18V20C18 20.55 18.45 21 19 21H20C20.55 21 21 20.55 21 20V12L18.92 6.01ZM6.5 16C5.67 16 5 15.33 5 14.5C5 13.67 5.67 13 6.5 13C7.33 13 8 13.67 8 14.5C8 15.33 7.33 16 6.5 16ZM17.5 16C16.67 16 16 15.33 16 14.5C16 13.67 16.67 13 17.5 13C18.33 13 19 13.67 19 14.5C19 15.33 18.33 16 17.5 16ZM5 11L6.5 6.5H17.5L19 11H5Z" fill="currentColor"/>
+                </svg>
             </div>
             <span class="nav-text">Авто</span>
         </button>
 
         <button class="nav-item" onclick="showSection('cities')">
             <div class="nav-icon-wrapper">
-                <div class="nav-icon icon-cities"></div>
+                <!-- Иконка городов -->
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 11V5L12 2L9 5V7H3V21H21V11H15ZM5 19H7V17H5V19ZM5 15H7V13H5V15ZM5 11H7V9H5V11ZM9 19H11V17H9V19ZM9 15H11V13H9V15ZM9 11H11V9H9V11ZM9 7H11V5H9V7ZM13 19H15V17H13V19ZM13 15H15V13H13V15ZM13 11H15V9H13V11ZM13 7H15V5H13V7ZM17 19H19V17H17V19ZM17 15H19V13H17V15Z" fill="currentColor"/>
+                </svg>
             </div>
             <span class="nav-text">Города</span>
         </button>
@@ -49,7 +58,10 @@
         <!-- КНОПКА СЕРВИС -->
         <button class="nav-item {% if request.endpoint == 'service' %}active{% endif %}" onclick="window.location.href='/service'">
             <div class="nav-icon-wrapper">
-                <div class="nav-icon icon-service"></div>
+                <!-- Иконка сервиса -->
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 8L15 12H18C18 15.31 15.31 18 12 18C10.99 18 10.03 17.75 9.2 17.3L7.74 18.76C9.03 19.54 10.43 20 12 20C16.42 20 20 16.42 20 12H23L19 8ZM6 12C6 8.69 8.69 6 12 6C13.01 6 13.97 6.25 14.8 6.7L16.26 5.24C14.97 4.46 13.57 4 12 4C7.58 4 4 7.58 4 12H1L5 16L9 12H6Z" fill="currentColor"/>
+                </svg>
             </div>
             <span class="nav-text">Сервис</span>
         </button>
@@ -57,14 +69,20 @@
         <!-- КНОПКА FAQ -->
         <button class="nav-item {% if request.endpoint == 'faq' %}active{% endif %}" onclick="window.location.href='/faq'">
             <div class="nav-icon-wrapper">
-                <div class="nav-icon icon-faq"></div>
+                <!-- Иконка FAQ -->
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 19H11V17H13V19ZM15.07 11.25L14.17 12.17C13.45 12.9 13 13.5 13 15H11V14.5C11 13.4 11.45 12.4 12.17 11.67L13.41 10.41C13.78 10.05 14 9.55 14 9C14 7.9 13.1 7 12 7C10.9 7 10 7.9 10 9H8C8 6.79 9.79 5 12 5C14.21 5 16 6.79 16 9C16 9.88 15.64 10.68 15.07 11.25Z" fill="currentColor"/>
+                </svg>
             </div>
             <span class="nav-text">FAQ</span>
         </button>
 
         <button class="nav-item {% if request.endpoint == 'contacts' %}active{% endif %}" onclick="window.location.href='/contacts'">
             <div class="nav-icon-wrapper">
-                <div class="nav-icon icon-contacts"></div>
+                <!-- Иконка контактов -->
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+                </svg>
             </div>
             <span class="nav-text">Контакты</span>
         </button>
@@ -96,7 +114,7 @@
             });
 
             // Активировать нажатую кнопку
-            event.target.classList.add('active');
+            event.target.closest('.nav-item').classList.add('active');
 
             if (sectionName === 'cities') {
                 showCitiesModal();
@@ -232,6 +250,9 @@
 
             // Автоматическое обновление активного состояния кнопок
             updateActiveNav();
+
+            // Настройка стилей для SVG иконок
+            setupSVGIcons();
         });
 
         // Функция для обновления активного состояния кнопок
@@ -259,61 +280,48 @@
                 }
             });
         }
+
+        // Функция для настройки цветов SVG иконок
+        function setupSVGIcons() {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                const icon = item.querySelector('.nav-icon');
+                if (icon) {
+                    // Установка начального цвета
+                    if (item.classList.contains('active')) {
+                        icon.style.color = '#ffffff';
+                    } else {
+                        icon.style.color = '#b0bec5';
+                    }
+
+                    // Добавление обработчика для hover
+                    item.addEventListener('mouseenter', () => {
+                        if (!item.classList.contains('active')) {
+                            icon.style.color = '#ffd700';
+                        }
+                    });
+
+                    item.addEventListener('mouseleave', () => {
+                        if (!item.classList.contains('active')) {
+                            icon.style.color = '#b0bec5';
+                        }
+                    });
+                }
+            });
+        }
+
+        // Обновление цветов иконок при смене активного состояния
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.nav-item')) {
+                setTimeout(() => {
+                    setupSVGIcons();
+                }, 10);
+            }
+        });
     </script>
     {% endblock %}
 
     <style>
-        /* Логотип */
-        .logo-image {
-            height: 40px;
-            width: auto;
-            margin-right: 10px;
-            vertical-align: middle;
-            filter: brightness(0) invert(1);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        /* Адаптивность для логотипа */
-        @media (max-width: 768px) {
-            .logo-image {
-                height: 35px;
-                margin-right: 8px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo-image {
-                height: 30px;
-                margin-right: 6px;
-            }
-        }
-
-        /* Иконка Сервиса */
-        .icon-service {
-            background: #b0bec5;
-            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z'/%3E") no-repeat center;
-        }
-
-        .nav-item.active .icon-service {
-            background: #ffffff;
-        }
-
-        /* Иконка FAQ */
-        .icon-faq {
-            background: #b0bec5;
-            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z'/%3E") no-repeat center;
-        }
-
-        .nav-item.active .icon-faq {
-            background: #ffffff;
-        }
-
         /* Модальное окно выбора города */
         .cities-modal {
             display: none;
@@ -365,6 +373,11 @@
             font-size: 24px;
             cursor: pointer;
             transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
         }
 
         .close-modal:hover {
@@ -510,6 +523,25 @@
 
         .btn-icon {
             font-size: 16px;
+        }
+
+        /* Стили для SVG иконок */
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:not(.active) .nav-icon {
+            color: #b0bec5;
+        }
+
+        .nav-item.active .nav-icon {
+            color: #ffffff;
+        }
+
+        .nav-item:hover:not(.active) .nav-icon {
+            color: #ffd700;
         }
 
         @media (max-width: 768px) {

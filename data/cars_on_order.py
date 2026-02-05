@@ -802,7 +802,7 @@ cars_on_order = {
     },
 
  'mazda-3-angkesela-2022': {
-        'brand': 'Mazda 3 Angkesela',
+        'brand': 'Mazda 3 ',
         'year': '2022',
         'engine': '2.0L (150 л.с.)',
         'transmission': 'Автомат',
@@ -827,14 +827,14 @@ cars_on_order = {
     },
 
     'honda-vezel': {
-        'brand': 'Honda Vezel (Binzhi)',
-        'year': '2022',
-        'engine': '1.5L (131 л.с.)',
+        'brand': 'Honda Vezel',
+        'year': '2025',
+        'engine': '1.5L (124 л.с.)',
         'transmission': 'Вариатор',
         'drive': 'Передний',
-        'mileage': '47 000 км',
+        'mileage': '0',
         'color': 'Серый',
-        'price': '1 345 000',
+        'price': '2 350 000',
         'price_cny': '72 000 ¥',
         'status': 'Под заказ',
         'status_class': 'on-order',

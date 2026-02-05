@@ -1,67 +1,413 @@
 {% extends "base.html" %}
 
-{% block title %}Honda Vezel (Binzhi) - CHI AUTO{% endblock %}
+{% block title %}Honda Vezel 2025 - Новый кроссовер - CHI AUTO{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='car-detail.css') }}">
+<style>
+    /* Стили для списка характеристик */
+    .features-section {
+        background: linear-gradient(135deg, rgba(30, 35, 75, 0.95) 0%, rgba(20, 25, 55, 0.95) 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin: 25px 0;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .features-section h2 {
+        color: #ffd700;
+        font-size: 28px;
+        margin-bottom: 25px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .features-section h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    }
+
+    .features-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .feature-item:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 215, 0, 0.4);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.1);
+    }
+
+    .feature-icon {
+        font-size: 20px;
+        color: #ffd700;
+        min-width: 30px;
+        text-align: center;
+    }
+
+    .feature-text {
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    /* Стили для преимуществ компании */
+    .company-advantages {
+        background: linear-gradient(135deg, rgba(40, 45, 85, 0.95) 0%, rgba(25, 30, 65, 0.95) 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin: 25px 0;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .company-advantages h2 {
+        color: #ffd700;
+        font-size: 28px;
+        margin-bottom: 25px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .company-advantages h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    }
+
+    .advantages-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+    }
+
+    .advantage-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .advantage-item:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(76, 175, 80, 0.4);
+        box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
+    }
+
+    .advantage-icon {
+        font-size: 24px;
+        color: #4CAF50;
+        min-width: 40px;
+        text-align: center;
+    }
+
+    .advantage-text {
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.4;
+        font-weight: 500;
+    }
+
+    /* Стили для галереи */
+    .gallery-section {
+        background: linear-gradient(135deg, rgba(30, 35, 75, 0.95) 0%, rgba(20, 25, 55, 0.95) 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin: 25px 0;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .gallery-section h2 {
+        color: #ffd700;
+        font-size: 28px;
+        margin-bottom: 25px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .gallery-section h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .gallery-item {
+        border-radius: 12px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #2a2f5d, #1c2145);
+        height: 150px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .gallery-item:hover {
+        transform: scale(1.05);
+        border-color: rgba(255, 215, 0, 0.4);
+        box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Модальное окно для изображений */
+    .image-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 3000;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .modal-image {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 15px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        font-size: 32px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+        background: rgba(255, 215, 0, 0.3);
+        transform: rotate(90deg);
+    }
+
+    /* Контактная информация в футере */
+    .contact-info {
+        background: linear-gradient(135deg, rgba(25, 30, 65, 0.95) 0%, rgba(15, 20, 50, 0.95) 100%);
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 30px;
+        text-align: center;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .contact-info h3 {
+        color: #ffd700;
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .contact-details {
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .contact-phone {
+        color: #4CAF50;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 15px 0;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .features-section,
+        .company-advantages,
+        .gallery-section {
+            padding: 20px;
+        }
+
+        .features-section h2,
+        .company-advantages h2,
+        .gallery-section h2 {
+            font-size: 24px;
+        }
+
+        .features-list,
+        .advantages-list {
+            grid-template-columns: 1fr;
+        }
+
+        .feature-text,
+        .advantage-text {
+            font-size: 15px;
+        }
+
+        .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .gallery-item {
+            height: 120px;
+        }
+
+        .contact-info {
+            padding: 20px;
+        }
+
+        .contact-info h3 {
+            font-size: 20px;
+        }
+
+        .contact-phone {
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .features-section,
+        .company-advantages,
+        .gallery-section {
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .gallery-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .gallery-item {
+            height: 150px;
+        }
+
+        .feature-item,
+        .advantage-item {
+            padding: 12px;
+            gap: 10px;
+        }
+
+        .feature-icon {
+            font-size: 18px;
+            min-width: 25px;
+        }
+
+        .advantage-icon {
+            font-size: 20px;
+            min-width: 35px;
+        }
+
+        .contact-info {
+            padding: 15px;
+        }
+
+        .contact-info h3 {
+            font-size: 18px;
+        }
+
+        .contact-phone {
+            font-size: 16px;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 <div class="container">
+    <!-- Кнопка назад -->
     <div class="back-button">
         <button class="back-btn" onclick="goBack()">
             <div class="back-icon">←</div>
-            Назад
+            Назад к каталогу
         </button>
     </div>
 
+    <!-- Основная информация -->
     <div class="car-detail">
-        <!-- Галерея изображений -->
-        <div class="car-gallery">
-            <div class="main-image">
-                <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-1.jpg') }}"
-                     alt="Honda Vezel (Binzhi)"
-                     onerror="this.src='{{ url_for('static', filename='images/no-photo.jpg') }}'">
-            </div>
-            <div class="image-thumbnails">
-                <div class="thumbnail">
-                    <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-1.jpg') }}"
-                         alt="Honda Vezel вид спереди">
-                </div>
-                <div class="thumbnail">
-                    <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-2.jpg') }}"
-                         alt="Honda Vezel вид сбоку">
-                </div>
-                <div class="thumbnail">
-                    <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-3.jpg') }}"
-                         alt="Honda Vezel салон">
-                </div>
-                <div class="thumbnail">
-                    <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-4.jpg') }}"
-                         alt="Honda Vezel приборная панель">
-                </div>
-            </div>
-        </div>
-
-        <!-- Основная информация -->
         <div class="car-detail-info">
             <div class="car-header">
-                <h1 class="car-title">Honda Vezel (Binzhi)</h1>
-                <div class="car-status on-order">Под заказ</div>
+                <h1 class="car-title">Honda Vezel 2025</h1>
+                <div class="car-status in-stock">Новый автомобиль</div>
             </div>
 
-            <div class="car-price-large">1 345 000 ₽</div>
-            <div class="car-price-cny">72 000 ¥</div>
+            <div class="car-price-large">2 350 000 ₽</div>
+            <div style="color: #ff9800; font-size: 18px; font-weight: 500; margin-bottom: 25px;">
 
-            <!-- Характеристики -->
+            </div>
+
+            <!-- Основные характеристики -->
             <div class="specs-grid">
                 <div class="spec-item">
                     <span class="spec-label">Год выпуска:</span>
-                    <span class="spec-value">2022</span>
+                    <span class="spec-value">2025</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Двигатель:</span>
-                    <span class="spec-value">1.5L Hybrid (131 л.с.)</span>
+                    <span class="spec-value">Бензин, 1.5 л</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Мощность:</span>
+                    <span class="spec-value">124 л.с.</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Коробка:</span>
@@ -72,185 +418,219 @@
                     <span class="spec-value">Передний</span>
                 </div>
                 <div class="spec-item">
-                    <span class="spec-label">Пробег:</span>
-                    <span class="spec-value">47 000 км</span>
+                    <span class="spec-label">Цвет:</span>
+                    <span class="spec-value">Белый</span>
                 </div>
                 <div class="spec-item">
-                    <span class="spec-label">Цвет:</span>
-                    <span class="spec-value">Серый металлик</span>
+                    <span class="spec-label">Руль:</span>
+                    <span class="spec-value">Левый</span>
                 </div>
-            </div>
-
-            <!-- Доставка -->
-            <div class="delivery-section">
-                <h3>Доставка</h3>
-                <div class="delivery-info">
-                    <span class="delivery-icon">🚚</span>
-                    <span class="delivery-text">Доставка до Иркутска</span>
+                <div class="spec-item">
+                    <span class="spec-label">Комплектация:</span>
+                    <span class="spec-value">1.5 CVT Elite</span>
                 </div>
-                <div class="delivery-info">
-                    <span class="delivery-icon">⏱</span>
-                    <span class="delivery-text">Срок доставки: 40-55 дней</span>
+                <div class="spec-item">
+                    <span class="spec-label">Пробег:</span>
+                    <span class="spec-value">Новый автомобиль</span>
                 </div>
-            </div>
-
-            <!-- Особенности -->
-            <div class="features-section">
-                <h3>Особенности</h3>
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <span class="feature-icon">✓</span>
-                        Гибридная система
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">✓</span>
-                        Экономичный расход: 4.5 л/100км
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">✓</span>
-                        Система безопасности Honda SENSING
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">✓</span>
-                        Камера заднего вида
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">✓</span>
-                        Климат-контроль
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">✓</span>
-                        Легкосплавные диски 17"
-                    </div>
-                </div>
-            </div>
-
-            <!-- Описание -->
-            <div class="description-section">
-                <h3>Описание</h3>
-                <p>Honda Vezel 2022 года (также известный как Honda HR-V) - компактный кроссовер-гибрид с низким расходом топлива. Автомобиль в отличном состоянии, полное ТО пройдено.</p>
-            </div>
-
-            <!-- Кнопки действий -->
-            <div class="action-buttons">
-                <button class="contact-btn" onclick="showContactForm()">
-                    <span class="btn-icon">📞</span>
-                    Заказать Honda Vezel
-                </button>
-                <button class="test-drive-btn" onclick="requestTestDrive()">
-                    <span class="btn-icon">🚗</span>
-                    Запись на тест-драйв
-                </button>
             </div>
         </div>
     </div>
-</div>
 
-<style>
-.car-price-cny {
-    font-size: 1.2em;
-    color: #ff9800;
-    margin-bottom: 20px;
-    font-weight: 500;
-}
+    <!-- Галерея изображений -->
+    <div class="gallery-section">
+        <h2>Фотографии Honda Vezel 2025</h2>
+        <div class="gallery-grid">
+            {% for i in range(1, 13) %}
+            <div class="gallery-item" onclick="openImageModal('{{ url_for('static', filename='images/honda-vezel/honda-vezel-' + i|string + '.jpg') }}')">
+                <img src="{{ url_for('static', filename='images/honda-vezel/honda-vezel-' + i|string + '.jpg') }}"
+                     alt="Honda Vezel 2025 - фото {{ i }}"
+                     onerror="this.src='{{ url_for('static', filename='images/no-photo.jpg') }}'">
+            </div>
+            {% endfor %}
+        </div>
+        <p style="text-align: center; color: #b0bec5; margin-top: 15px; font-size: 14px;">
+            Нажмите на фото для увеличения
+        </p>
+    </div>
 
-.delivery-section {
-    background: rgba(33, 150, 243, 0.1);
-    padding: 15px;
-    border-radius: 10px;
-    margin: 20px 0;
-}
+    <!-- Технические характеристики -->
+    <div class="features-section">
+        <h2>🚀 Технические характеристики:</h2>
+        <ul class="features-list">
+            <li class="feature-item">
+                <span class="feature-icon"></span>
+                <span class="feature-text">Полный Электро-пакет</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon"></span>
+                <span class="feature-text">Мульти руль</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon"></span>
+                <span class="feature-text">Все системы безопасности</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon"></span>
+                <span class="feature-text">Регулировка руля во всех положениях</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon"></span>
+                <span class="feature-text">Цветной многофункциональный дисплей</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon"></span>
+                <span class="feature-text">Камера заднего вида</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon"></span>
+                <span class="feature-text">Диодная оптика</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon"></span>
+                <span class="feature-text">Бортовой компьютер</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon"></span>
+                <span class="feature-text">Оригинальные литые диски</span>
+            </li>
+        </ul>
+    </div>
 
-.delivery-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
+    <!-- Преимущества компании -->
+    <div class="company-advantages">
+        <h2>🏢 Преимущества покупки у нас</h2>
+        <ul class="advantages-list">
+            <li class="advantage-item">
+                <span class="advantage-icon"></span>
+                <span class="advantage-text">Крупный импортер автомобилей из Китая</span>
+            </li>
+            <li class="advantage-item">
+                <span class="advantage-icon"></span>
+                <span class="advantage-text">Прозрачные условия</span>
+            </li>
+            <li class="advantage-item">
+                <span class="advantage-icon"></span>
+                <span class="advantage-text">Быстрая доставка</span>
+            </li>
+            <li class="advantage-item">
+                <span class="advantage-icon"></span>
+                <span class="advantage-text">Сервисное обслуживание</span>
+            </li>
+        </ul>
+    </div>
 
-.delivery-info:last-child {
-    margin-bottom: 0;
-}
+<!-- Контактная информация -->
+<div class="contact-info">
+    <h3>📞 Контактная информация</h3>
+    <div class="contact-details">
+        Для получения дополнительной информации о Honda Vezel 2025 или для оформления заказа:
+    </div>
 
-.delivery-icon {
-    margin-right: 10px;
-    font-size: 1.2em;
-}
+    <div class="contact-list">
+        <div class="contact-item">
+            <span class="contact-city">Иркутск:</span>
+            <span class="contact-phone">📞 +7 (901) 666-86-68</span>
+        </div>
+        <div class="contact-item">
+            <span class="contact-city">Москва:</span>
+            <span class="contact-phone">📞 +7 (968) 077-55-69</span>
+        </div>
+        <div class="contact-item">
+            <span class="contact-city">Барнаул:</span>
+            <span class="contact-phone">📞 8 (994) 030-53-22</span>
+        </div>
+        <div class="contact-item">
+            <span class="contact-city">Абакан:</span>
+            <span class="contact-phone">📞 +7 (908) 326-40-20</span>
+        </div>
+        <div class="contact-item">
+            <span class="contact-city">Улан-Удэ:</span>
+            <span class="contact-phone">📞 +7 (901) 666-86-68</span>
+        </div>
+        <div class="contact-item">
+            <span class="contact-city">Сочи:</span>
+            <span class="contact-phone">📞 +7 (995) 505-50-38</span>
+        </div>
+        <div class="contact-item">
+            <span class="contact-city">Красноярск:</span>
+            <span class="contact-phone">📞 +7 (901) 939-70-23</span>
+        </div>
+        <div class="contact-item">
+            <span class="contact-city">Екатеринбург:</span>
+            <span class="contact-phone">📞 +7 (901) 666-86-68</span>
+        </div>
+        <div class="contact-item">
+            <span class="contact-city">Новосибирск:</span>
+            <span class="contact-phone">📞 +7 (901) 666-86-68</span>
+        </div>
+    </div>
 
-.contact-btn {
-    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 10px;
-    font-size: 1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 10px;
-}
 
-.contact-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-}
 
-.test-drive-btn {
-    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 10px;
-    font-size: 1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.test-drive-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
-}
-
-.btn-icon {
-    margin-right: 10px;
-    font-size: 1.2em;
-}
-</style>
 {% endblock %}
 
 {% block scripts %}
 <script>
+    // Функция возврата назад
     function goBack() {
         window.history.back();
     }
 
-    function showContactForm() {
-        alert('Заказ Honda Vezel\n\nЦена: 1 345 000 ₽\nОставьте ваш номер телефона:');
-    }
+    // Функции для работы с модальным окном изображений
+    function openImageModal(imageSrc) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
 
-    function requestTestDrive() {
-        alert('Запись на тест-драйв Honda Vezel\n\nДоступен в Иркутске после доставки');
-    }
+        modalImg.src = imageSrc;
+        modal.style.display = 'flex';
 
-    // Обработка кликов на миниатюры
-    document.addEventListener('DOMContentLoaded', function() {
-        const thumbnails = document.querySelectorAll('.thumbnail img');
-        const mainImage = document.querySelector('.main-image img');
-
-        thumbnails.forEach(thumb => {
-            thumb.addEventListener('click', function() {
-                mainImage.src = this.src;
-                mainImage.alt = this.alt;
-            });
+        // Закрытие при клике вне изображения
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeImageModal();
+            }
         });
+
+        // Закрытие по клавише Esc
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+
+        // Блокировка прокрутки фона
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+        modal.style.display = 'none';
+        document.removeEventListener('keydown', closeImageModal);
+        document.body.style.overflow = 'auto';
+    }
+
+    // Анимация при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        // Анимация появления элементов
+        const animateElements = (selector, delay = 50) => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * delay);
+            });
+        };
+
+        // Анимируем разные группы элементов
+        setTimeout(() => animateElements('.feature-item', 80), 300);
+        setTimeout(() => animateElements('.advantage-item', 100), 500);
+        setTimeout(() => animateElements('.gallery-item', 60), 700);
     });
 </script>
 {% endblock %}
