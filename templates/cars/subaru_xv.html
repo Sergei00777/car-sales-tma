@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Mazda CX-50 2025 - Новый кроссовер - CHI AUTO{% endblock %}
+{% block title %}Subaru XV 2022 - Полноприводный кроссовер - CHI AUTO{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='car-detail.css') }}">
@@ -273,6 +273,21 @@
         margin-bottom: 15px;
     }
 
+    /* Стили для статуса автомобиля */
+    .delivery-info {
+        background: rgba(33, 150, 243, 0.1);
+        border: 1px solid rgba(33, 150, 243, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    .delivery-info span {
+        color: #2196f3;
+        font-weight: bold;
+    }
+
     /* Стили для списка контактов */
     .contact-list {
         display: grid;
@@ -428,20 +443,22 @@
     <div class="car-detail">
         <div class="car-detail-info">
             <div class="car-header">
-                <h1 class="car-title">Mazda CX-50 </h1>
-                <div class="car-status in-stock">Новый автомобиль</div>
+                <h1 class="car-title">Subaru XV 2022</h1>
+                <div class="car-status in-stock">В наличии</div>
             </div>
 
-            <div class="car-price-large">3 950 000 ₽</div>
-            <div style="color: #ff9800; font-size: 18px; font-weight: 500; margin-bottom: 25px;">
-                Комплектация Safety
+            <div class="car-price-large">2 850 000 ₽</div>
+
+            <!-- Информация о доставке -->
+            <div class="delivery-info">
+                <span>Доставка: 15-20 дней</span> | <span>Доставка до Иркутска</span>
             </div>
 
             <!-- Основные характеристики -->
             <div class="specs-grid">
                 <div class="spec-item">
                     <span class="spec-label">Год выпуска:</span>
-                    <span class="spec-value">2025</span>
+                    <span class="spec-value">2022</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Двигатель:</span>
@@ -449,31 +466,31 @@
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Мощность:</span>
-                    <span class="spec-value">155 л.с.</span>
+                    <span class="spec-value">154 л.с.</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Коробка:</span>
-                    <span class="spec-value">АКПП</span>
+                    <span class="spec-value">Вариатор</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Привод:</span>
-                    <span class="spec-value">Передний</span>
+                    <span class="spec-value">4WD (полный)</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Цвет:</span>
-                    <span class="spec-value">Бежевый</span>
+                    <span class="spec-value">Белый</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Руль:</span>
                     <span class="spec-value">Левый</span>
                 </div>
                 <div class="spec-item">
-                    <span class="spec-label">Комплектация:</span>
-                    <span class="spec-value">2.0 AT Safety</span>
+                    <span class="spec-label">Пробег:</span>
+                    <span class="spec-value">45 000 км</span>
                 </div>
                 <div class="spec-item">
-                    <span class="spec-label">Пробег:</span>
-                    <span class="spec-value">Новый автомобиль</span>
+                    <span class="spec-label">Особенность:</span>
+                    <span class="spec-value">Без пробега по РФ</span>
                 </div>
             </div>
         </div>
@@ -481,12 +498,12 @@
 
     <!-- Галерея изображений -->
     <div class="gallery-section">
-        <h2>Фотографии Mazda CX-50 2025</h2>
+        <h2>Фотографии Subaru XV 2022</h2>
         <div class="gallery-grid">
-            {% for i in range(1, 15) %}
-            <div class="gallery-item" onclick="openImageModal('{{ url_for('static', filename='images/mazda-cx50/cx50-' + i|string + '.jpg') }}')">
-                <img src="{{ url_for('static', filename='images/mazda-cx50/cx50-' + i|string + '.jpg') }}"
-                     alt="Mazda CX-50 2025 - фото {{ i }}"
+            {% for i in range(1, 8) %}
+            <div class="gallery-item" onclick="openImageModal('{{ url_for('static', filename='images/subaru-xv/subaru-xv-' + i|string + '.jpg') }}')">
+                <img src="{{ url_for('static', filename='images/subaru-xv/subaru-xv-' + i|string + '.jpg') }}"
+                     alt="Subaru XV 2022 - фото {{ i }}"
                      onerror="this.src='{{ url_for('static', filename='images/no-photo.jpg') }}'">
             </div>
             {% endfor %}
@@ -553,11 +570,15 @@
             </li>
             <li class="advantage-item">
                 <span class="advantage-icon">🔹</span>
-                <span class="advantage-text">Быстрая доставка</span>
+                <span class="advantage-text">Быстрая доставка (15-20 дней)</span>
             </li>
             <li class="advantage-item">
                 <span class="advantage-icon">🔹</span>
                 <span class="advantage-text">Сервисное обслуживание</span>
+            </li>
+            <li class="advantage-item">
+                <span class="advantage-icon">🔹</span>
+                <span class="advantage-text">Автомобили без пробега по РФ</span>
             </li>
         </ul>
     </div>
@@ -566,7 +587,7 @@
     <div class="contact-info">
         <h3>📞 Контактная информация</h3>
         <div class="contact-details">
-            Для получения дополнительной информации о Mazda CX-50 2025 или для оформления заказа:
+            Для получения дополнительной информации о Subaru XV 2022 или для оформления заказа:
         </div>
 
         <div class="contact-list">
