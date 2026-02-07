@@ -1,0 +1,736 @@
+{% extends "base.html" %}
+
+{% block title %}Mazda CX-30 2022 - Компактный кроссовер - CHI AUTO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='car-detail.css') }}">
+<style>
+    /* Стили для списка характеристик */
+    .features-section {
+        background: linear-gradient(135deg, rgba(30, 35, 75, 0.95) 0%, rgba(20, 25, 55, 0.95) 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin: 25px 0;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .features-section h2 {
+        color: #ffd700;
+        font-size: 28px;
+        margin-bottom: 25px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .features-section h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    }
+
+    .features-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .feature-item:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 215, 0, 0.4);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.1);
+    }
+
+    .feature-icon {
+        font-size: 20px;
+        color: #ffd700;
+        min-width: 30px;
+        text-align: center;
+    }
+
+    .feature-text {
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    /* Стили для преимуществ компании */
+    .company-advantages {
+        background: linear-gradient(135deg, rgba(40, 45, 85, 0.95) 0%, rgba(25, 30, 65, 0.95) 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin: 25px 0;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .company-advantages h2 {
+        color: #ffd700;
+        font-size: 28px;
+        margin-bottom: 25px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .company-advantages h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    }
+
+    .advantages-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+    }
+
+    .advantage-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .advantage-item:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(76, 175, 80, 0.4);
+        box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
+    }
+
+    .advantage-icon {
+        font-size: 24px;
+        color: #4CAF50;
+        min-width: 40px;
+        text-align: center;
+    }
+
+    .advantage-text {
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.4;
+        font-weight: 500;
+    }
+
+    /* Стили для галереи */
+    .gallery-section {
+        background: linear-gradient(135deg, rgba(30, 35, 75, 0.95) 0%, rgba(20, 25, 55, 0.95) 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin: 25px 0;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .gallery-section h2 {
+        color: #ffd700;
+        font-size: 28px;
+        margin-bottom: 25px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .gallery-section h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .gallery-item {
+        border-radius: 12px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #2a2f5d, #1c2145);
+        height: 150px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .gallery-item:hover {
+        transform: scale(1.05);
+        border-color: rgba(255, 215, 0, 0.4);
+        box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Модальное окно для изображений */
+    .image-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 3000;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .modal-image {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 15px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .close-modal {
+        position: fixed; /* Изменено с absolute на fixed */
+        top: 15px; /* Уменьшено для удобства */
+        right: 15px; /* Уменьшено для удобства */
+        background: rgba(255, 255, 255, 0.2); /* Более заметный фон */
+        border: 2px solid rgba(255, 215, 0, 0.5);
+        color: white;
+        font-size: 28px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 3001; /* Выше чем модальное окно */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .close-modal:hover {
+        background: rgba(255, 215, 0, 0.4);
+        border-color: rgba(255, 215, 0, 0.8);
+        transform: rotate(90deg) scale(1.1);
+    }
+
+    /* Контактная информация */
+    .contact-info {
+        background: linear-gradient(135deg, rgba(25, 30, 65, 0.95) 0%, rgba(15, 20, 50, 0.95) 100%);
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 30px;
+        text-align: center;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .contact-info h3 {
+        color: #ffd700;
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .contact-details {
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    /* Стили для статуса автомобиля */
+    .delivery-info {
+        background: rgba(33, 150, 243, 0.1);
+        border: 1px solid rgba(33, 150, 243, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    .delivery-info span {
+        color: #2196f3;
+        font-weight: bold;
+    }
+
+    /* Стили для списка контактов */
+    .contact-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    .contact-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .contact-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(76, 175, 80, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .contact-city {
+        color: #ffd700;
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    .contact-phone {
+        color: #4CAF50;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .features-section,
+        .company-advantages,
+        .gallery-section {
+            padding: 20px;
+        }
+
+        .features-section h2,
+        .company-advantages h2,
+        .gallery-section h2 {
+            font-size: 24px;
+        }
+
+        .features-list,
+        .advantages-list {
+            grid-template-columns: 1fr;
+        }
+
+        .feature-text,
+        .advantage-text {
+            font-size: 15px;
+        }
+
+        .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .gallery-item {
+            height: 120px;
+        }
+
+        .contact-info {
+            padding: 20px;
+        }
+
+        .contact-info h3 {
+            font-size: 20px;
+        }
+
+        .contact-list {
+            grid-template-columns: 1fr;
+        }
+
+        .contact-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .contact-city,
+        .contact-phone {
+            font-size: 14px;
+        }
+
+        /* Адаптивные стили для кнопки закрытия на мобильных */
+        .close-modal {
+            top: 10px;
+            right: 10px;
+            width: 45px;
+            height: 45px;
+            font-size: 24px;
+            background: rgba(255, 255, 255, 0.25); /* Еще заметнее на мобильных */
+            border: 2px solid rgba(255, 215, 0, 0.7);
+        }
+
+        .modal-image {
+            max-width: 95%;
+            max-height: 70vh;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .features-section,
+        .company-advantages,
+        .gallery-section {
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .gallery-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .gallery-item {
+            height: 150px;
+        }
+
+        .feature-item,
+        .advantage-item {
+            padding: 12px;
+            gap: 10px;
+        }
+
+        .feature-icon {
+            font-size: 18px;
+            min-width: 25px;
+        }
+
+        .advantage-icon {
+            font-size: 20px;
+            min-width: 35px;
+        }
+
+        .contact-info {
+            padding: 15px;
+        }
+
+        .contact-info h3 {
+            font-size: 18px;
+        }
+
+        .contact-city,
+        .contact-phone {
+            font-size: 13px;
+        }
+
+        /* Еще меньше на очень маленьких экранах */
+        .close-modal {
+            top: 8px;
+            right: 8px;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Кнопка назад -->
+    <div class="back-button">
+        <button class="back-btn" onclick="goBack()">
+            <div class="back-icon">←</div>
+            Назад к каталогу
+        </button>
+    </div>
+
+    <!-- Основная информация -->
+    <div class="car-detail">
+        <div class="car-detail-info">
+            <div class="car-header">
+                <h1 class="car-title">Mazda CX-30 2022</h1>
+                <div class="car-status in-stock">В наличии</div>
+            </div>
+
+            <div class="car-price-large">2 650 000 ₽</div>
+
+            <!-- Информация о доставке -->
+            <div class="delivery-info">
+                <span>Доставка: 15-20 дней</span> | <span>Доставка до Иркутска</span>
+            </div>
+
+            <!-- Основные характеристики -->
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <span class="spec-label">Год выпуска:</span>
+                    <span class="spec-value">2022</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Двигатель:</span>
+                    <span class="spec-value">Бензин, 2.0 л</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Мощность:</span>
+                    <span class="spec-value">150 л.с.</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Коробка:</span>
+                    <span class="spec-value">АКПП</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Привод:</span>
+                    <span class="spec-value">Передний</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Цвет:</span>
+                    <span class="spec-value">Белый</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Руль:</span>
+                    <span class="spec-value">Левый</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Пробег:</span>
+                    <span class="spec-value">32 000 км</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Особенность:</span>
+                    <span class="spec-value">Без пробега по РФ</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Галерея изображений -->
+    <div class="gallery-section">
+        <h2>Фотографии Mazda CX-30 2022</h2>
+        <div class="gallery-grid">
+            {% for i in range(1, 8) %}
+            <div class="gallery-item" onclick="openImageModal('{{ url_for('static', filename='images/mazda-cx30/mazda-cx30-' + i|string + '.jpg') }}')">
+                <img src="{{ url_for('static', filename='images/mazda-cx30/mazda-cx30-' + i|string + '.jpg') }}"
+                     alt="Mazda CX-30 2022 - фото {{ i }}"
+                     onerror="this.src='{{ url_for('static', filename='images/no-photo.jpg') }}'">
+            </div>
+            {% endfor %}
+        </div>
+        <p style="text-align: center; color: #b0bec5; margin-top: 15px; font-size: 14px;">
+            Нажмите на фото для увеличения
+        </p>
+    </div>
+
+    <!-- Технические характеристики -->
+    <div class="features-section">
+        <h2>🚀 Технические характеристики:</h2>
+        <ul class="features-list">
+            <li class="feature-item">
+                <span class="feature-icon">🔹</span>
+                <span class="feature-text">Полный Электро-пакет</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">🔹</span>
+                <span class="feature-text">Мульти руль</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">🔹</span>
+                <span class="feature-text">Все системы безопасности</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">🔹</span>
+                <span class="feature-text">Регулировка руля во всех положениях</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">🔹</span>
+                <span class="feature-text">Цветной многофункциональный дисплей</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">🔹</span>
+                <span class="feature-text">Камера заднего вида</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">🔹</span>
+                <span class="feature-text">Диодная оптика</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">🔹</span>
+                <span class="feature-text">Бортовой компьютер</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">🔹</span>
+                <span class="feature-text">Оригинальные литые диски</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Преимущества компании -->
+    <div class="company-advantages">
+        <h2>🏢 Преимущества покупки у нас</h2>
+        <ul class="advantages-list">
+            <li class="advantage-item">
+                <span class="advantage-icon">🔹</span>
+                <span class="advantage-text">Крупный импортер автомобилей из Китая</span>
+            </li>
+            <li class="advantage-item">
+                <span class="advantage-icon">🔹</span>
+                <span class="advantage-text">Прозрачные условия</span>
+            </li>
+            <li class="advantage-item">
+                <span class="advantage-icon">🔹</span>
+                <span class="advantage-text">Быстрая доставка (15-20 дней)</span>
+            </li>
+            <li class="advantage-item">
+                <span class="advantage-icon">🔹</span>
+                <span class="advantage-text">Сервисное обслуживание</span>
+            </li>
+            <li class="advantage-item">
+                <span class="advantage-icon">🔹</span>
+                <span class="advantage-text">Автомобили без пробега по РФ</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Контактная информация -->
+    <div class="contact-info">
+        <h3>📞 Контактная информация</h3>
+        <div class="contact-details">
+            Для получения дополнительной информации о Mazda CX-30 2022 или для оформления заказа:
+        </div>
+
+        <div class="contact-list">
+            <div class="contact-item">
+                <span class="contact-city">Иркутск:</span>
+                <span class="contact-phone">📞 +7 (901) 666-86-68</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-city">Москва:</span>
+                <span class="contact-phone">📞 +7 (968) 077-55-69</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-city">Барнаул:</span>
+                <span class="contact-phone">📞 8 (994) 030-53-22</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-city">Абакан:</span>
+                <span class="contact-phone">📞 +7 (908) 326-40-20</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-city">Улан-Удэ:</span>
+                <span class="contact-phone">📞 +7 (901) 666-86-68</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-city">Сочи:</span>
+                <span class="contact-phone">📞 +7 (995) 505-50-38</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-city">Красноярск:</span>
+                <span class="contact-phone">📞 +7 (901) 939-70-23</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-city">Екатеринбург:</span>
+                <span class="contact-phone">📞 +7 (901) 666-86-68</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-city">Новосибирск:</span>
+                <span class="contact-phone">📞 +7 (901) 666-86-68</span>
+            </div>
+        </div>
+
+        <div class="contact-details" style="margin-top: 20px;">
+            График работы: Пн-Пт 9:00-20:00, Сб-Вс 10:00-18:00
+        </div>
+    </div>
+
+    <!-- Модальное окно для изображений -->
+    <div id="imageModal" class="image-modal">
+        <button class="close-modal" onclick="closeImageModal()">×</button>
+        <img id="modalImage" class="modal-image" src="" alt="">
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Функция возврата назад
+    function goBack() {
+        window.history.back();
+    }
+
+    // Функции для работы с модальным окном изображений
+    function openImageModal(imageSrc) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+
+        modalImg.src = imageSrc;
+        modal.style.display = 'flex';
+
+        // Закрытие при клике вне изображения
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeImageModal();
+            }
+        });
+
+        // Закрытие по клавише Esc
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+
+        // Блокировка прокрутки фона
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+        modal.style.display = 'none';
+        document.removeEventListener('keydown', closeImageModal);
+        document.body.style.overflow = 'auto';
+    }
+
+    // Анимация при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        // Анимация появления элементов
+        const animateElements = (selector, delay = 50) => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * delay);
+            });
+        };
+
+        // Анимируем разные группы элементов
+        setTimeout(() => animateElements('.feature-item', 80), 300);
+        setTimeout(() => animateElements('.advantage-item', 100), 500);
+        setTimeout(() => animateElements('.gallery-item', 60), 700);
+    });
+</script>
+{% endblock %}

@@ -35,10 +35,10 @@ cars_on_order = {
         'mileage': '45 000 км, без пробега по РФ',
         'color': 'Белый',
         'price': '2 850 000',
-        'price_cny': '135 000 ¥',
-        'status': 'В наличии',
+        'price_cny': '',
+        'status': 'Под заказ',
         'status_class': 'in-stock',
-        'delivery_time': '15-20 дней',
+        'delivery_time': '25-45 дней',
         'delivery': 'доставка до Иркутска',
         'images': ['images/subaru-xv.jpg'],
         'features': [
@@ -56,21 +56,21 @@ cars_on_order = {
 
     },
 
-    'mazda-cx-30-2023': {
+    'mazda-cx-30-2022': {
         'brand': 'Mazda CX-30',
-        'year': '2023',
+        'year': '2022',
         'engine': '2.0L (150 л.с.)',
         'transmission': 'Автомат',
         'drive': 'Передний',
-        'mileage': '22 000 км',
-        'color': 'Серый металлик',
-        'price': '2 120 000',
-        'price_cny': '104 900 ¥',
+        'mileage': '32 000 км',
+        'color': 'Белый',
+        'price': '1 980 000',
+        'price_cny': '',
         'status': 'Под заказ',
         'status_class': 'on-order',
         'delivery_time': '35-50 дней',
         'delivery': 'доставка до Иркутска',
-        'images': ['cars/mazda-cx-30.jpg'],
+        'images': ['images/mazda-cx-30.jpg'],
         'features': [
             'Матричные фары',
             'Кожаный салон',
@@ -78,7 +78,7 @@ cars_on_order = {
             'Беспроводной CarPlay',
             'Давление в шинах'
         ],
-        'description': 'Mazda CX-30 2023 года с минимальным пробегом. Все оригинальные документы в наличии.'
+        'description': 'Mazda CX-30 2022 года с минимальным пробегом. Все оригинальные документы в наличии.'
     },
 
     'mazda-3-angkesela-2021': {
