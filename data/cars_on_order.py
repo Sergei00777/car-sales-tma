@@ -81,21 +81,21 @@ cars_on_order = {
         'description': 'Mazda CX-30 2022 года с минимальным пробегом. Все оригинальные документы в наличии.'
     },
 
-    'mazda-3-angkesela-2021': {
-        'brand': 'Mazda 3 Angkesela',
-        'year': '2021',
+    'mazda-3-2022': {
+        'brand': 'Mazda 3 ',
+        'year': '2022',
         'engine': '2.0L (150 л.с.)',
         'transmission': 'Автомат',
         'drive': 'Передний',
-        'mileage': '17 000 км',
-        'color': 'Красный',
-        'price': '1 672 000',
-        'price_cny': '77 800 ¥',
+        'mileage': '24 000 км',
+        'color': 'Белый',
+        'price': '2 000 000',
+        'price_cny': '',
         'status': 'Под заказ',
         'status_class': 'on-order',
         'delivery_time': '40-55 дней',
         'delivery': 'доставка до Иркутска',
-        'images': ['cars/mazda-3.jpg'],
+        'images': ['images/mazda-3.jpg'],
         'features': [
             'Кожаный руль',
             'Климат-контроль',
@@ -103,32 +103,38 @@ cars_on_order = {
             'Датчики дождя',
             'Легкосплавные диски'
         ],
-        'description': 'Mazda 3 2021 года. Экономичный расход, отличная управляемость.'
+        'description': 'Mazda 3 2022 года. Экономичный расход, отличная управляемость.'
     },
 
-    'chevrolet-cruze': {
-        'brand': 'Chevrolet Cruze',
-        'year': '2022',
-        'engine': '1.3T (165 л.с.)',
-        'transmission': 'Автомат',
-        'drive': 'Передний',
-        'mileage': '45 000 км',
-        'color': 'Синий',
-        'price': '1 021 000',
-        'price_cny': '45 800 ¥',
+    'nissan-qashqai-2025': {
+        'brand': 'Nissan Qashqai',
+        'year': '2025',
+        'engine': 'бензин, 2.0 л',
+        'power': '151 л.с.',
+        'transmission': 'вариатор',
+        'drive': 'передний',
+        'mileage': 'новый автомобиль',
+        'color': 'белый',
+        'steering': 'левый',
+        'price': '2 400 000',
+        'price_cny': '',  # примерный курс
         'status': 'Под заказ',
         'status_class': 'on-order',
         'delivery_time': '25-40 дней',
         'delivery': 'доставка до Иркутска',
-        'images': ['cars/chevrolet-cruze.jpg'],
+        'images': ['images/nissan-qashqai.jpg'],
         'features': [
-            'Мультимедийная система',
-            'Кондиционер',
-            'Парктроники',
-            'Электростеклоподъемники',
-            'Круиз-контроль'
+            'Полный Электро-пакет',
+            'Мульти руль',
+            'Все системы безопасности',
+            'Регулировка руля во всех положениях',
+            'Цветной многофункциональный дисплей',
+            'Камера заднего вида',
+            'Диодная оптика',
+            'Бортовой компьютер',
+            'Оригинальные литые диски'
         ],
-        'description': 'Chevrolet Cruze 2022 года. Надежный и экономичный седан.'
+        'description': 'Nissan Qashqai 2025 года. Компактный кроссовер, идеальный для города и путешествий. Новый автомобиль без пробега.'
     },
 
     'mazda-cx-30-2021': {
